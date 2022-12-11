@@ -19,7 +19,8 @@ export class AllTotpFetcherComponent implements OnInit {
   }
 
   getAllOtps() {
-    this.getAllTotpService.getAllTotp().then((data) => {
+    this.getAllTotpService.getAllTotp(
+).then((data) => {
       data.subscribe((e) => {
         console.log('data  is ' + e);
         this.allOtps = e;
