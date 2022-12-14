@@ -5,6 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AllTotpFetcherComponent } from './all-totp-fetcher/all-totp-fetcher.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+import { TotpCreatorComponent } from './totp-creator/totp-creator.component';
+
 
 @NgModule({
   imports: [
@@ -12,12 +17,18 @@ import { AllTotpFetcherComponent } from './all-totp-fetcher/all-totp-fetcher.com
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      {path: '', component: AllTotpFetcherComponent}
+      {path: '', component: AllTotpFetcherComponent},
+      {path: 'createTOTP', component: TotpCreatorComponent},
+      {path: 'createTOTP/:id', component: TotpCreatorComponent}
+
     ]),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   declarations: [
     AppComponent,
-    AllTotpFetcherComponent
+    AllTotpFetcherComponent,
+    TotpCreatorComponent
   ],
   bootstrap: [AppComponent],
 })

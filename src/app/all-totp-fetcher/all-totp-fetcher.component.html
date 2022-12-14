@@ -1,19 +1,45 @@
-<p>all-totp-fetcher works!</p>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+/><link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
+
+<a routerLink="/createTOTP" class="create-icon"
+  ><img
+    class="img-create-icon"
+    src="../../assets/icons/icons8-add-new-100.png"
+  />Add new TOTP
+</a>
 
 <div *ngIf="allOtps" class="wrap-table100">
   <div class="table">
     <div class="row header">
       <div class="cell">Name</div>
       <div class="cell">TOTP Secret</div>
+      <div class="cell">Edit link</div>
+      <div class="cell">Delete link</div>
     </div>
     <ng-container *ngFor="let totpResponse of allOtps">
       <div class="row">
         <div class="cell" data-title="Name">
           {{ totpResponse.name }}
         </div>
-        <div class="cell" data-title="TOTP Secret">
+        <button class="cell" (click)="copyTotp(totpResponse.secret)">
           {{ totpResponse.secret }}
-        </div>
+        </button>
+
+        <a [routerLink]="['/createTOTP',totpResponse.id]" class="cell"> Edit </a>
+
+        <button class="cell" (click)="deleteSecret(totpResponse)">
+          Delete
+        </button>
+
+        <!-- <div class="cell" data-title="TOTP Secret"> -->
+        <!-- {{ totpResponse.secret }} -->
+        <!-- </div> -->
       </div>
     </ng-container>
   </div>

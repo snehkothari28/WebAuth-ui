@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { GetAllTotpService } from '../get-all-totp.service';
+import { TotpService } from '../totp.service';
 import { TotpResponse } from '../model/totp-response';
-import {Clipboard} from '@angular/cdk/clipboard';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { ToastrService } from 'ngx-toastr';
+import { interval, Observable } from 'rxjs';
+import { CreateTOTP } from '../model/create-totp';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -11,7 +14,11 @@ import {Clipboard} from '@angular/cdk/clipboard';
 export class AllTotpFetcherComponent implements OnInit {
   allOtps!: TotpResponse[];
 
-  constructor(private getAllTotpService: GetAllTotpService , private clipboard: Clipboard) {}
+  constructor(
+    private totpService: TotpService,
+    private clipboard: Clipboard,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     // this.getAllTotpService.getBackendUrl();
@@ -19,16 +26,46 @@ export class AllTotpFetcherComponent implements OnInit {
   }
 
   getAllOtps() {
-    this.getAllTotpService.getAllTotp(
-).then((data) => {
-      data.subscribe((e) => {
-        console.log('data  is ' + e);
-        this.allOtps = e;
+    this.totpService.getAllTotp().then((data) => {
+      this.refreshOtp(data);
+      interval(15000).subscribe(() => {
+        this.refreshOtp(data);
       });
     });
   }
 
-  copyTotp() {
-    this.clipboard.copy('Alphonso');
+  refreshOtp(data: Observable<TotpResponse[]>) {
+    console.log('refreshing all totps');
+    data.subscribe((e) => {
+      this.allOtps = e;
+    });
+  }
+  copyTotp(textToCopy: string) {
+    this.clipboard.copy(textToCopy);
+    this.toastr.info('Copied to clipboard');
+  }
+
+  deleteSecret(totpResponse: TotpResponse) {
+    if (confirm('Are you sure you want to delete ' + totpResponse.name)) {
+      console.log(
+        'deleting totpResponse with id ' +
+          totpResponse.id +
+          ' and name ' +
+          totpResponse.name
+      );
+      this.totpService.deleteTOTP(totpResponse.id).then((e) =>
+        e.subscribe((data) => {
+          console.log(
+            'deleted successfully totpResponse with id ' +
+              totpResponse.id +
+              ' and name ' +
+              totpResponse.name
+          );
+          this.totpService.getAllTotp().then((data) => {
+            this.refreshOtp(data);
+          });
+        })
+      );
+    }
   }
 }
