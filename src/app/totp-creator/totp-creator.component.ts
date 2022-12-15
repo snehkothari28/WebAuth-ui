@@ -50,7 +50,9 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     console.log(this.addSecret.value);
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
-      secretKey: this.addSecret.get('secret')?.value ?? 'invalid secret value',
+      secretKey:
+        this.addSecret.get('secret')?.value?.replace(/\s/g, '') ??
+        'invalid secret value',
       id: this.createTOTP.id,
     };
     console.log(createTOTP);
@@ -70,7 +72,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/');
       });
     } else {
-      console.log('updating TOTPPP');
+      console.log('updating TOTP');
       this.totpService.updateTOTP(createTOTP).then((e) => {
         e.subscribe((data) => {
           console.log(data);
