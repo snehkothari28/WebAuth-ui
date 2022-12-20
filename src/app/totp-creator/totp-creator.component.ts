@@ -25,15 +25,26 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
         const idFromParam = +params['id']; // (+) converts string 'id' to a number
 
         this.totpService.getSecretKey(idFromParam).then((e) =>
-          e.subscribe((data) => {
-            console.log('data received ' + data.id + data.name);
-            this.createTOTP = data;
-            this.addSecret.controls.name.setValue(data.name);
-            this.addSecret.controls.secret.setValue(data.secretKey);
-          })
+          e.subscribe(
+            (data) => {
+              console.log('data received ' + data.id + data.name);
+              this.createTOTP = data;
+              this.addSecret.controls.name.setValue(data.name);
+              this.addSecret.controls.secret.setValue(data.secretKey);
+            },
+            (error) => {
+              this.errorFunction(error);
+            }
+          )
         );
       }
     });
+  }
+
+  private errorFunction(error: any) {
+    this.toastr.error('Error Occured, please login again');
+    console.log('caught in error' + error);
+    this.router.navigateByUrl('/login');
   }
 
   ngOnDestroy() {
@@ -46,7 +57,6 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   });
 
   onSubmit(): void {
-    // const Formthis.addSecret.get('name')?.value
     console.log(this.addSecret.value);
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
@@ -57,37 +67,47 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     };
     console.log(createTOTP);
     if (createTOTP.id == -1) {
-      this.totpService.createTOTP(createTOTP).then((data) => {
-        console.log(data);
-        console.log(
-          'secret added: ' +
-            this.addSecret.get('name')?.value +
-            ' ' +
-            this.addSecret.get('secret')?.value
-        );
-        this.toastr.info('Added secret', undefined, {
-          closeButton: true,
-          timeOut: 2000,
-        });
-        this.router.navigateByUrl('/');
-      });
-    } else {
-      console.log('updating TOTP');
-      this.totpService.updateTOTP(createTOTP).then((e) => {
-        e.subscribe((data) => {
+      this.totpService.createTOTP(createTOTP).then(
+        (data) => {
           console.log(data);
           console.log(
-            'Secret updated: ' +
+            'secret added: ' +
               this.addSecret.get('name')?.value +
               ' ' +
               this.addSecret.get('secret')?.value
           );
-          this.toastr.info('Updated secret', undefined, {
+          this.toastr.info('Added secret', undefined, {
             closeButton: true,
             timeOut: 2000,
           });
-          this.router.navigateByUrl('/');
-        });
+          this.router.navigateByUrl('/home');
+        },
+        (error) => {
+          this.errorFunction(error);
+        }
+      );
+    } else {
+      console.log('updating TOTP');
+      this.totpService.updateTOTP(createTOTP).then((e) => {
+        e.subscribe(
+          (data) => {
+            console.log(data);
+            console.log(
+              'Secret updated: ' +
+                this.addSecret.get('name')?.value +
+                ' ' +
+                this.addSecret.get('secret')?.value
+            );
+            this.toastr.info('Updated secret', undefined, {
+              closeButton: true,
+              timeOut: 2000,
+            });
+            this.router.navigateByUrl('/');
+          },
+          (error) => {
+            this.errorFunction(error);
+          }
+        );
       });
     }
   }

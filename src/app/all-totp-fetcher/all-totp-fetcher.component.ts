@@ -5,6 +5,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { ToastrService } from 'ngx-toastr';
 import { interval, Observable } from 'rxjs';
 import { CreateTOTP } from '../model/create-totp';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -17,20 +18,25 @@ export class AllTotpFetcherComponent implements OnInit {
   constructor(
     private totpService: TotpService,
     private clipboard: Clipboard,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // this.getAllTotpService.getBackendUrl();
     this.getAllOtps();
   }
 
   getAllOtps() {
     this.totpService.getAllTotp().then((data) => {
       this.refreshOtp(data);
-      interval(15000).subscribe(() => {
-        this.refreshOtp(data);
-      });
+      interval(15000).subscribe(
+        () => {
+          this.refreshOtp(data);
+        },
+        (error) => {
+          this.errorFunction(error);
+        }
+      );
     });
   }
 
@@ -41,6 +47,7 @@ export class AllTotpFetcherComponent implements OnInit {
     });
   }
   copyTotp(textToCopy: string) {
+    
     this.clipboard.copy(textToCopy);
     this.toastr.info('Copied to clipboard');
   }
@@ -54,18 +61,28 @@ export class AllTotpFetcherComponent implements OnInit {
           totpResponse.name
       );
       this.totpService.deleteTOTP(totpResponse.id).then((e) =>
-        e.subscribe((data) => {
-          console.log(
-            'deleted successfully totpResponse with id ' +
-              totpResponse.id +
-              ' and name ' +
-              totpResponse.name
-          );
-          this.totpService.getAllTotp().then((data) => {
-            this.refreshOtp(data);
-          });
-        })
+        e.subscribe(
+          (data) => {
+            console.log(
+              'deleted successfully totpResponse with id ' +
+                totpResponse.id +
+                ' and name ' +
+                totpResponse.name
+            );
+            this.totpService.getAllTotp().then((data) => {
+              this.refreshOtp(data);
+            });
+          },
+          (error) => {
+            this.errorFunction(error);
+          }
+        )
       );
     }
+  }
+  private errorFunction(error: any) {
+    this.toastr.error('Error Occured, please login again');
+    console.log('caught in error' + error);
+    this.router.navigateByUrl('/login');
   }
 }

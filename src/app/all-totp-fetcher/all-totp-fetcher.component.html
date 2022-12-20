@@ -6,13 +6,14 @@
   href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
   rel="stylesheet"
 />
-
-<a routerLink="/createTOTP" class="create-icon"
-  ><img
-    class="img-create-icon"
-    src="../../assets/icons/icons8-add-new-100.png"
-  />Add new TOTP
-</a>
+<div *ngIf="allOtps">
+  <a routerLink="/createTOTP" class="create-icon"
+    ><img
+      class="img-create-icon"
+      src="../../assets/icons/icons8-add-new-100.png"
+    />Add new TOTP
+  </a>
+</div>
 
 <div *ngIf="allOtps" class="wrap-table100">
   <div class="table">
@@ -31,15 +32,14 @@
           {{ totpResponse.secret }}
         </button>
 
-        <a [routerLink]="['/createTOTP',totpResponse.id]" class="cell"> Edit </a>
+        <a [routerLink]="['/createTOTP', totpResponse.id]" class="cell">
+          Edit
+        </a>
 
         <button class="cell" (click)="deleteSecret(totpResponse)">
           Delete
         </button>
 
-        <!-- <div class="cell" data-title="TOTP Secret"> -->
-        <!-- {{ totpResponse.secret }} -->
-        <!-- </div> -->
       </div>
     </ng-container>
   </div>

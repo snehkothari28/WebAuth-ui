@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { response } from 'express';
-import { lastValueFrom, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CreateTOTP } from './model/create-totp';
 import { TotpResponse } from './model/totp-response';
 
@@ -10,28 +9,15 @@ import { TotpResponse } from './model/totp-response';
   providedIn: 'root',
 })
 export class TotpService {
-  private backendUrl: String | undefined;
-  constructor(private http: HttpClient) {
-    // this.getBackendUrl();
-  }
-  async getBackendUrl() {
-    const res = await this.http
-      .get('assets/BackendUrl', { responseType: 'text' })
-      .toPromise();
-    this.backendUrl = res;
-    // console.log('Backend url is ' + this.backendUrl);
-  }
+  private backendUrl = environment.backEndUrl;
+  constructor(private http: HttpClient) {}
 
   async getAllTotp(): Promise<Observable<TotpResponse[]>> {
-    await this.getBackendUrl();
-
     // console.log(this.backendUrl + 'getAll');
     return this.http.get<TotpResponse[]>(this.backendUrl + 'getAll');
   }
 
   async createTOTP(createTOTP: CreateTOTP) {
-    await this.getBackendUrl();
-
     // console.log(this.backendUrl + 'createAuth');
     // console.log(createTOTP);
     await this.http
@@ -41,15 +27,12 @@ export class TotpService {
   }
 
   async getSecretKey(id: Number): Promise<Observable<CreateTOTP>> {
-    await this.getBackendUrl();
-
     // console.log(this.backendUrl + 'getAll');
     return this.http.get<CreateTOTP>(this.backendUrl + 'get/' + id);
   }
 
   async updateTOTP(createTOTP: CreateTOTP): Promise<Observable<any>> {
-    console.log('updating secretkey '+ createTOTP.id);
-    await this.getBackendUrl();
+    console.log('updating secretkey ' + createTOTP.id);
 
     console.log(this.backendUrl + 'update/' + createTOTP.id);
     console.log(createTOTP);
@@ -59,8 +42,6 @@ export class TotpService {
     );
   }
   async deleteTOTP(id: Number): Promise<Observable<any>> {
-    await this.getBackendUrl();
-
     // console.log(this.backendUrl + 'getAll');
     return this.http.delete<any>(this.backendUrl + 'delete/' + id);
   }
