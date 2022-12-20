@@ -5,7 +5,10 @@ if test -f nohup.out; then
 fi
 
 timestamp=$(date "+%Y%m%d%H%M%S")
-mkdir server-logs/timestamp
+[ ! -d server-logs ] && mkdir server-logs
+[ ! -d server-logs/"$timestamp" ] && mkdir server-logs/"$timestamp"
 
-nohup ng serve --configuration=production --port=4401 1>./server-logs/timestamp/stdout.txt 2>./server-logs/timestamp/stderr.txt &
+nohup ng serve --configuration=production --port=4401 1>./server-logs/"$timestamp"/stdout.txt 2>./server-logs/"$timestamp"/stderr.txt &
 echo $! > save_pid.txt
+
+echo "Running WebAuth-ui server and logging at server-logs/${timestamp}"
