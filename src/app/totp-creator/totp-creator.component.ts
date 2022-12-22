@@ -102,7 +102,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
               closeButton: true,
               timeOut: 2000,
             });
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/home');
           },
           (error) => {
             this.errorFunction(error);
