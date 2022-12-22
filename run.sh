@@ -14,3 +14,12 @@ nohup ng serve --configuration=production --host=0.0.0.0 1>./server-logs/"$times
 echo $! > save_pid.txt
 
 echo "Running WebAuth-ui server and logging at server-logs/${timestamp}"
+
+echo "stdout logs"
+
+cat ./server-logs/"$timestamp"/stdout.txt
+
+echo "stderr logs"
+
+cat ./server-logs/"$timestamp"/stderr.txt
+
