@@ -6,10 +6,11 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private router: Router) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -17,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (!localStorage.getItem('token')) {
       console.log('token empty');
+      this.router.navigateByUrl('/login')
       return EMPTY;
     }
     const token = localStorage.getItem('token');
