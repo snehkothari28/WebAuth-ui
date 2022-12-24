@@ -24,7 +24,7 @@
       id="secret"
       type="text"
       formControlName="secret"
-      onblur="this.value = this.value.split(' ').join('')"
+      oninput="this.value = this.value.split(' ').join('')"
     />
     <div
       *ngIf="
