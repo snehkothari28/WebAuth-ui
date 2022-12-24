@@ -45,6 +45,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   }
 
   copyTotp(textToCopy: string) {
+    if (textToCopy.trim.length == 0) return;
     this.clipboard.copy(textToCopy);
     this.toastr.info('Copied to clipboard');
   }
