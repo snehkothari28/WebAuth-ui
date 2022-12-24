@@ -106,9 +106,11 @@ iframe {
 }
 
 .wrap-table100 {
-  width: 960px;
+  width: auto;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+  top: 38px;
 }
 
 .table {
@@ -268,7 +270,7 @@ button {
   font-size: 14px;
   cursor: pointer;
   /* background-color: #1976d2; */
-  color: white;
+  /* color: black; */
   border: none;
 }
 

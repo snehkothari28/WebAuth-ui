@@ -11,7 +11,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TotpCreatorComponent implements OnInit, OnDestroy {
   private sub: any;
-  private createTOTP: CreateTOTP = { name: '', secretKey: '', id: -1 };
+  private createTOTP: CreateTOTP = {
+    name: '',
+    secretKey: '',
+    id: 0,
+    url: '',
+    email: '',
+    password: '',
+  };
+  isUpdateRequest: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private totpService: TotpService,
@@ -23,20 +31,21 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe((params) => {
       if (params['id'] != null) {
         const idFromParam = +params['id']; // (+) converts string 'id' to a number
-
-        this.totpService.getSecretKey(idFromParam).then((e) =>
-          e.subscribe(
-            (data) => {
-              console.log('data received ' + data.id + data.name);
-              this.createTOTP = data;
-              this.addSecret.controls.name.setValue(data.name);
-              this.addSecret.controls.secret.setValue(data.secretKey);
-            },
-            (error) => {
-              this.errorFunction(error);
-            }
-          )
-        );
+        this.isUpdateRequest = true;
+        this.totpService.getSecretKey(idFromParam).subscribe({
+          next: (data) => {
+            console.log('data received ' + data.id + data.name);
+            this.createTOTP = data;
+            this.addSecret.controls.name.setValue(data.name);
+            this.addSecret.controls.url.setValue(data.url);
+            this.addSecret.controls.email.setValue(data.email);
+            this.addSecret.controls.password.setValue(data.password);
+            this.addSecret.controls.secret.disable();
+          },
+          error: (err) => {
+            this.errorFunction(err);
+          },
+        });
       }
     });
   }
@@ -52,62 +61,54 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   }
 
   addSecret = this.formBuilder.group({
-    name: new FormControl('', Validators.required),
-    secret: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    secret: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    url: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
   });
 
   onSubmit(): void {
     console.log(this.addSecret.value);
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
-      secretKey:
-        this.addSecret.get('secret')?.value?.replace(/\s/g, '') ??
-        'invalid secret value',
+      secretKey: this.addSecret.get('secret')?.disabled
+        ? undefined
+        : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
       id: this.createTOTP.id,
+      url: this.addSecret.get('url')?.value ?? '',
+      email: this.addSecret.get('email')?.value ?? '',
+      password: this.addSecret.get('password')?.value ?? '',
     };
     console.log(createTOTP);
-    if (createTOTP.id == -1) {
-      this.totpService.createTOTP(createTOTP).then(
-        (data) => {
-          console.log(data);
-          console.log(
-            'secret added: ' +
-              this.addSecret.get('name')?.value +
-              ' ' +
-              this.addSecret.get('secret')?.value
-          );
+    if (!this.isUpdateRequest) {
+      this.totpService.createTOTP(createTOTP).subscribe({
+        next: () => {
+          console.log('added TOTP');
           this.toastr.info('Added secret', undefined, {
             closeButton: true,
             timeOut: 2000,
           });
           this.router.navigateByUrl('/home');
         },
-        (error) => {
-          this.errorFunction(error);
-        }
-      );
+        error: (err) => {
+          this.errorFunction(err);
+        },
+      });
     } else {
       console.log('updating TOTP');
-      this.totpService.updateTOTP(createTOTP).then((e) => {
-        e.subscribe(
-          (data) => {
-            console.log(data);
-            console.log(
-              'Secret updated: ' +
-                this.addSecret.get('name')?.value +
-                ' ' +
-                this.addSecret.get('secret')?.value
-            );
-            this.toastr.info('Updated secret', undefined, {
-              closeButton: true,
-              timeOut: 2000,
-            });
-            this.router.navigateByUrl('/home');
-          },
-          (error) => {
-            this.errorFunction(error);
-          }
-        );
+      this.totpService.updateTOTP(createTOTP).subscribe({
+        next: () => {
+          console.log('Secret updated: ');
+          this.toastr.info('Updated secret', undefined, {
+            closeButton: true,
+            timeOut: 2000,
+          });
+          this.router.navigateByUrl('/home');
+        },
+        error: (err) => {
+          this.errorFunction(err);
+        },
       });
     }
   }

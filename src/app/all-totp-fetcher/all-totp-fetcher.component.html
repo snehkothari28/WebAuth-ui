@@ -6,6 +6,7 @@
   href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
   rel="stylesheet"
 />
+
 <div *ngIf="allOtps">
   <a routerLink="/createTOTP" class="create-icon"
     ><img
@@ -13,34 +14,55 @@
       src="../../assets/icons/icons8-add-new-100.png"
     />Add new TOTP
   </a>
-</div>
-
-<div *ngIf="allOtps" class="wrap-table100">
-  <div class="table">
-    <div class="row header">
-      <div class="cell">Name</div>
-      <div class="cell">TOTP Secret</div>
-      <div class="cell">Edit link</div>
-      <div class="cell">Delete link</div>
-    </div>
-    <ng-container *ngFor="let totpResponse of allOtps">
-      <div class="row">
-        <div class="cell" data-title="Name">
-          {{ totpResponse.name }}
-        </div>
-        <button class="cell" (click)="copyTotp(totpResponse.secret)">
-          {{ totpResponse.secret }}
-        </button>
-
-        <a [routerLink]="['/createTOTP', totpResponse.id]" class="cell">
-          Edit
-        </a>
-
-        <button class="cell" (click)="deleteSecret(totpResponse)">
-          Delete
-        </button>
-
+  <div class="wrap-table100">
+    <div class="table">
+      <div class="row header">
+        <div class="cell">Name</div>
+        <div class="cell">TOTP Secret</div>
+        <div class="cell">URL</div>
+        <div class="cell">Email/Username</div>
+        <div class="cell">Password</div>
+        <div class="cell">Edit link</div>
+        <div class="cell">Delete link</div>
       </div>
-    </ng-container>
+      <ng-container *ngFor="let totpResponse of allOtps">
+        <div class="row">
+          <div class="cell" data-title="Name">
+            {{ totpResponse.name }}
+          </div>
+          <div class="cell">
+            <button (click)="copyTotp(totpResponse.secret)">
+              {{ totpResponse.secret }}
+            </button>
+          </div>
+          <div class="cell">
+            <button (click)="copyTotp(totpResponse.url)">
+              {{ totpResponse.url }}
+            </button>
+          </div>
+          <div class="cell">
+            <button (click)="copyTotp(totpResponse.email)">
+              {{ totpResponse.email }}
+            </button>
+          </div>
+
+          <div class="cell">
+            <button (click)="copyTotp(totpResponse.password)">
+              {{ totpResponse.password }}
+            </button>
+          </div>
+          <div *ngIf="totpResponse.isOwner; else empty" class="cell">
+            <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
+          </div>
+
+          <div *ngIf="totpResponse.isOwner; else empty" class="cell">
+            <button (click)="deleteSecret(totpResponse)">Delete</button>
+          </div>
+        </div>
+        <ng-template #empty>
+          <div class="cell"></div>
+        </ng-template>
+      </ng-container>
+    </div>
   </div>
 </div>

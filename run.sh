@@ -10,16 +10,9 @@ timestamp=$(date "+%Y%m%d%H%M%S")
 [ ! -d server-logs ] && mkdir server-logs
 [ ! -d server-logs/"$timestamp" ] && mkdir server-logs/"$timestamp"
 
-nohup ng serve --configuration=production --host=0.0.0.0 --disable-host-check 1>./server-logs/"$timestamp"/stdout.txt 2>./server-logs/"$timestamp"/stderr.txt &
+nohup ng serve --configuration=production --host=0.0.0.0 --disable-host-check >./server-logs/"$timestamp"/log.txt 2>&1 &
 echo $! > save_pid.txt
 
 echo "Running WebAuth-ui server and logging at server-logs/${timestamp}"
 
-echo "stdout logs"
-
-cat ./server-logs/"$timestamp"/stdout.txt
-
-echo "stderr logs"
-
-cat ./server-logs/"$timestamp"/stderr.txt
-
+tail -f ./server-logs/"$timestamp"/log.txt

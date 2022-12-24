@@ -1,15 +1,68 @@
+<form [formGroup]="addSecret" (ngSubmit)="onSubmit()" novalidate>
+  <div>
+    <label for="name"> Name </label>
+    <input id="name" type="text" formControlName="name" />
+    <div
+      *ngIf="
+        addSecret.controls['name'].invalid &&
+        (addSecret.controls['name'].dirty || addSecret.controls['name'].touched)
+      "
+      class="alert"
+    >
+      <div *ngIf="addSecret.controls['name'].errors?.['required']">
+        Name is required.
+      </div>
+      <div *ngIf="addSecret.controls['name'].errors?.['minlength']">
+        Name should be atleast 4 character long.
+      </div>
+    </div>
+  </div>
 
-<form [formGroup]="addSecret" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="name"> Name </label>
-      <input id="name" type="text" formControlName="name" />
+  <div *ngIf="!isUpdateRequest">
+    <label for="secret"> Secret </label>
+    <input
+      id="secret"
+      type="text"
+      formControlName="secret"
+      onblur="this.value = this.value.split(' ').join('')"
+    />
+    <div
+      *ngIf="
+        addSecret.controls['secret'].invalid &&
+        (addSecret.controls['secret'].dirty ||
+          addSecret.controls['secret'].touched)
+      "
+      class="alert"
+    >
+      <div *ngIf="addSecret.controls['secret'].errors?.['required']">
+        Secret is required.
+      </div>
+      <div *ngIf="addSecret.controls['secret'].errors?.['minlength']">
+        Secret should be atleast 4 character long.
+      </div>
     </div>
-  
-    <div>
-      <label for="secret"> Secret </label>
-      <input id="secret" type="text" formControlName="secret" />
-    </div>
-  
-    <button class="button" type="submit">Add TOTP</button>
-  </form>
-  
+  </div>
+
+  <div>
+    <label for="url"> URL </label>
+    <input id="url" type="text" formControlName="url" />
+  </div>
+
+  <div>
+    <label for="email"> Email </label>
+    <input id="email" type="text" formControlName="email" />
+  </div>
+
+  <div>
+    <label for="password"> Password </label>
+    <input id="pass" type="text" formControlName="password" />
+  </div>
+
+  <button
+    [disabled]="addSecret.pristine || addSecret.invalid"
+    class="button"
+    type="submit"
+  >
+    Add TOTP
+  </button>
+</form>
