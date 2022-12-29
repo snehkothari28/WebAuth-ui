@@ -15,5 +15,3 @@ echo $! > save_pid.txt
 
 echo "Running WebAuth-ui server and logging at server-logs/${timestamp}"
 
-sleep 5000
-cat ./server-logs/"$timestamp"/log.txt

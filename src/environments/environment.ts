@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  gsiClientId: "dasdas",
-  backEndUrl: "http://localhost:8081/"
+  gsiClientId: 'dasdas',
+  backEndUrl: 'http://localhost:8081/api/',
+  companyDomain: 'test.com',
+  companyName: 'Test',
 };
 
 /*

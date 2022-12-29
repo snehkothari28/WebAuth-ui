@@ -4,6 +4,8 @@ import { TotpResponse } from '../model/totp-response';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import validator from 'validator';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -14,6 +16,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
 
+  companyName = environment.companyName;
   constructor(
     private totpService: TotpService,
     private clipboard: Clipboard,
@@ -67,7 +70,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
               totpResponse.name
           );
           this.toastr.info('Delete success');
-          this.totpService.getAllTotp();
+          this.getAllOtps();
         },
         error: (err) => {
           this.errorFunction(err);
@@ -81,5 +84,16 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     this.toastr.error('Error Occured, please login again');
     console.log('caught in error' + error);
     this.router.navigateByUrl('/login');
+  }
+  goToLink(url: string) {
+    this.copyTotp(url);
+    if (validator.isURL(url)) {
+      if (!url.match(/^https?:\/\//i)) {
+        url = 'https://' + url;
+      }
+      console.log(url);
+      window.open(url);
+    }
+    
   }
 }

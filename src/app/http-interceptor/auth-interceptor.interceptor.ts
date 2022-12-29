@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     if (!localStorage.getItem('token')) {
       console.log('token empty');
-      this.router.navigateByUrl('/login')
+      this.router.navigateByUrl('/login');
       return EMPTY;
     }
     const token = localStorage.getItem('token');
@@ -28,7 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     const req1 = request.clone({
-      headers: request.headers.set('Authorization', `Bearer ${token}`),
+      headers: request.headers
+        .set('Authorization', `Bearer ${token}`)
+        .set('requestId', uuidv4()),
     });
 
     return next.handle(req1);

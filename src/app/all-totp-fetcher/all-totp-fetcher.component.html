@@ -7,6 +7,8 @@
   rel="stylesheet"
 />
 
+<h2>Welcome to {{ companyName }} authentication portal</h2>
+
 <div *ngIf="allOtps">
   <a routerLink="/createTOTP" class="create-icon"
     ><img
@@ -36,7 +38,7 @@
             </button>
           </div>
           <div class="cell">
-            <button (click)="copyTotp(totpResponse.url)">
+            <button (click)="goToLink(totpResponse.url)">
               {{ totpResponse.url }}
             </button>
           </div>
@@ -51,11 +53,14 @@
               {{ totpResponse.password }}
             </button>
           </div>
-          <div *ngIf="totpResponse.isOwner; else empty" class="cell">
+          <div
+            *ngIf="totpResponse.owner || totpResponse.writeUser; else empty"
+            class="cell"
+          >
             <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
           </div>
 
-          <div *ngIf="totpResponse.isOwner; else empty" class="cell">
+          <div *ngIf="totpResponse.owner; else empty" class="cell">
             <button (click)="deleteSecret(totpResponse)">Delete</button>
           </div>
         </div>
