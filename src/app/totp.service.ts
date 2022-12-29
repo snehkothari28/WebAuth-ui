@@ -24,9 +24,9 @@ export class TotpService {
     );
   }
 
-  getSecretKey(id: Number): Observable<CreateTOTP> {
+  getSecretKey(id: Number): Observable<TotpResponse> {
     // console.log(this.backendUrl + 'getAll');
-    return this.http.get<CreateTOTP>(this.backendUrl + 'get/' + id);
+    return this.http.get<TotpResponse>(this.backendUrl + 'get/' + id);
   }
 
   updateTOTP(createTOTP: CreateTOTP): Observable<any> {

@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { TotpCreatorComponent } from './totp-creator/totp-creator.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   imports: [
@@ -24,14 +25,17 @@ import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor
       {
         path: 'home',
         component: AllTotpFetcherComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'createTOTP',
         component: TotpCreatorComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'createTOTP/:id',
         component: TotpCreatorComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'login',
@@ -56,14 +60,8 @@ import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor
     LoginComponent,
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [],
-      },
-    },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

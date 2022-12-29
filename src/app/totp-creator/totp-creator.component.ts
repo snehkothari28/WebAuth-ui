@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateTOTP } from '../model/create-totp';
 import { TotpService } from '../totp.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-totp-creator',
   templateUrl: './totp-creator.component.html',
@@ -11,15 +12,38 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TotpCreatorComponent implements OnInit, OnDestroy {
   private sub: any;
-  private createTOTP: CreateTOTP = {
-    name: '',
-    secretKey: '',
-    id: 0,
-    url: '',
-    email: '',
-    password: '',
-  };
+
   isUpdateRequest: boolean = false;
+  updateId: Number | undefined;
+  isWriteUser: boolean = false;
+  isOwner: boolean = false;
+  companyDomain = environment.companyDomain;
+  addSecret = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(4)]],
+    secret: ['', [Validators.required, Validators.minLength(4)]],
+    url: [''],
+    email: [''],
+    password: [''],
+    delegationTable: this.formBuilder.array([
+      this.createDelegationTableGroup('@' + this.companyDomain, false),
+    ]),
+  });
+
+  createDelegationTableGroup(email: string, writeUser: boolean) {
+    return this.formBuilder.group({
+      email: [
+        { value: email, disabled: !this.isWriteUser && !this.isOwner },
+        [
+          Validators.required,
+          Validators.minLength(this.companyDomain.length + 2),
+          Validators.pattern('^[A-Za-z0-9._%+-]+@' + this.companyDomain + '$'),
+          Validators.maxLength(45),
+        ],
+      ],
+      isWriteUser: { value: writeUser, disabled: !this.isOwner },
+    }) as FormGroup;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private totpService: TotpService,
@@ -29,23 +53,39 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
+      this.delegationTableFormArray.removeAt(0);
       if (params['id'] != null) {
         const idFromParam = +params['id']; // (+) converts string 'id' to a number
         this.isUpdateRequest = true;
+        this.updateId = idFromParam;
         this.totpService.getSecretKey(idFromParam).subscribe({
           next: (data) => {
             console.log('data received ' + data.id + data.name);
-            this.createTOTP = data;
+            this.isOwner = data.owner;
+            this.isWriteUser = data.writeUser;
             this.addSecret.controls.name.setValue(data.name);
             this.addSecret.controls.url.setValue(data.url);
             this.addSecret.controls.email.setValue(data.email);
             this.addSecret.controls.password.setValue(data.password);
             this.addSecret.controls.secret.disable();
+            if (data.delegationTable !== undefined) {
+              data.delegationTable.forEach((element) => {
+                this.addSecret.controls.delegationTable.push(
+                  this.createDelegationTableGroup(
+                    element.email,
+                    element.isWriteUser
+                  )
+                );
+              });
+            }
           },
           error: (err) => {
             this.errorFunction(err);
           },
         });
+      } else {
+        this.isOwner = true;
+        this.isWriteUser = true;
       }
     });
   }
@@ -60,25 +100,23 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addSecret = this.formBuilder.group({
-    name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    secret: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    url: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-  });
-
   onSubmit(): void {
-    console.log(this.addSecret.value);
+    if (!this.addSecret.valid) {
+      console.log('invalid form');
+      this.toastr.error('Invalid form, please check');
+      return;
+    }
+
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined
         : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
-      id: this.createTOTP.id,
+      id: this.updateId,
       url: this.addSecret.get('url')?.value ?? '',
       email: this.addSecret.get('email')?.value ?? '',
       password: this.addSecret.get('password')?.value ?? '',
+      delegationTableModel: this.delegationTableFormArray.value,
     };
     console.log(createTOTP);
     if (!this.isUpdateRequest) {
@@ -89,7 +127,6 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             closeButton: true,
             timeOut: 2000,
           });
-          this.router.navigateByUrl('/home');
         },
         error: (err) => {
           this.errorFunction(err);
@@ -99,17 +136,30 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
       console.log('updating TOTP');
       this.totpService.updateTOTP(createTOTP).subscribe({
         next: () => {
-          console.log('Secret updated: ');
+          console.log('Secret updated');
           this.toastr.info('Updated secret', undefined, {
             closeButton: true,
             timeOut: 2000,
           });
-          this.router.navigateByUrl('/home');
         },
         error: (err) => {
           this.errorFunction(err);
         },
       });
     }
+    this.router.navigateByUrl('/home');
+  }
+
+  get delegationTableFormArray() {
+    return this.addSecret.get('delegationTable') as FormArray;
+  }
+  deleteFieldValue(i: number) {
+    this.delegationTableFormArray.removeAt(i);
+    this.delegationTableFormArray.markAsDirty();
+  }
+  addFieldValue() {
+    this.delegationTableFormArray.push(
+      this.createDelegationTableGroup('@' + this.companyDomain, false)
+    );
   }
 }

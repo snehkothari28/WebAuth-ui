@@ -1,3 +1,4 @@
+<a routerLink="/home" class="home-link"> Go to Home</a>
 <form [formGroup]="addSecret" (ngSubmit)="onSubmit()" novalidate>
   <div>
     <label for="name"> Name </label>
@@ -57,12 +58,103 @@
     <label for="password"> Password </label>
     <input id="pass" type="text" formControlName="password" />
   </div>
-
+  <br />
+  <br />
+  <ng-container *ngIf="delegationTableFormArray.length">
+    <table id="delegation_table">
+      <tr>
+        <th>Email</th>
+        <th>Can add other users?</th>
+        <th>Remove</th>
+      </tr>
+      <ng-container formArrayName="delegationTable">
+        <ng-container
+          *ngFor="
+            let delegationRow of delegationTableFormArray.controls;
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <tr>
+            <td>
+              <input
+                type="email"
+                class="cell"
+                data-title="Email"
+                placeholder="Shrine email address"
+                value="email"
+                formControlName="email"
+                oninput="this.value = this.value.split(' ').join('')"
+              />
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                class="cell"
+                data-title="Write Access?"
+                placeholder=""
+                value="isWriteUser"
+                formControlName="isWriteUser"
+                style="text-align: center;"
+              />
+            </td>
+            <td>
+              <button [disabled]="!isOwner" (click)="deleteFieldValue(i)">
+                Remove user
+              </button>
+            </td>
+          </tr>
+          <div
+            *ngIf="
+              delegationTableFormArray.controls[i].invalid &&
+              (delegationTableFormArray.controls[i].dirty ||
+                delegationTableFormArray.controls[i].touched)
+            "
+            class="alert"
+          >
+            <p>Error:</p>
+            <div
+              *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['required']"
+            >
+              Email is required.
+            </div>
+            <div
+              *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['minlength']"
+            >
+              Check email id.
+            </div>
+            <div
+              *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['pattern']"
+            >
+              Please use {{ companyDomain }} email id only
+            </div>
+            <div
+              *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['maxlength']"
+            >
+              Mail id should be shorter
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <br />
+    </table>
+  </ng-container>
+  <button mat-raised-button (click)="addFieldValue()" type="button" style="margin-left: 50px;">
+    Add Users to delegate this access
+  </button>
+  <br />
+  <br />
+  <br />
   <button
     [disabled]="addSecret.pristine || addSecret.invalid"
-    class="button"
+    class="form-submit"
     type="submit"
   >
-    Add TOTP
+    <ng-container *ngIf="isUpdateRequest; else addTotpText" class="center">
+      <h4>Update TOTP</h4>
+    </ng-container>
+    <ng-template #addTotpText class="center">
+      <h4>Add TOTP</h4>
+    </ng-template>
   </button>
 </form>

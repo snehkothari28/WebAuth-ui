@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private ngZone: NgZone,
-    private toastr: ToastrService,
-
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {}
 
@@ -50,20 +49,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
       shape: 'rectangular',
       text: 'continue_with',
       logo_alignment: 'center',
-      width: 1000
+      width: 1000,
     });
   }
   handleCredentialResponse(response: string) {
-    console.log('success login');
-    this.authenticationService.authenticate(response).subscribe(
-      () => {
+    console.log('loging in');
+    this.authenticationService.authenticate(response).subscribe({
+      next: () => {
         console.log('routing to home');
         this.router.navigateByUrl('/home');
       },
-      (error) => {
-        this.errorFunction(error);
-      }
-    );
+      error: (err) => {
+        this.errorFunction(err);
+      },
+    });
   }
   private errorFunction(error: any) {
     this.toastr.error('Error Occured, please login again');
