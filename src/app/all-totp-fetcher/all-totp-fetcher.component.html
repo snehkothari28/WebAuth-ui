@@ -7,9 +7,9 @@
   rel="stylesheet"
 />
 
-<h2>Welcome to {{ companyName }} authentication portal</h2>
-
-<div *ngIf="allOtps">
+<app-top-bar></app-top-bar>
+  
+<div *ngIf="allOtps; else noOtp">
   <a routerLink="/createTOTP" class="create-icon"
     ><img
       class="img-create-icon"
@@ -71,3 +71,8 @@
     </div>
   </div>
 </div>
+<ng-template #noOtp>
+  <h2 class="noOtp"> You have not been delegated any project creds yet. <br/>
+    Either ask the project owner to add one or create one yourself if you own the project.
+  </h2>
+</ng-template>
