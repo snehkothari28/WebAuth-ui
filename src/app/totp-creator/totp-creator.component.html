@@ -1,7 +1,7 @@
 <a routerLink="/home" class="home-link"> Go to Home</a>
 <form [formGroup]="addSecret" (ngSubmit)="onSubmit()" novalidate>
   <div>
-    <label for="name"> Name </label>
+    <label for="name"> Project Name </label>
     <input id="name" type="text" formControlName="name" />
     <div
       *ngIf="
@@ -20,7 +20,7 @@
   </div>
 
   <div *ngIf="!isUpdateRequest">
-    <label for="secret"> Secret </label>
+    <label for="secret"> Secret Key </label>
     <input
       id="secret"
       type="text"
@@ -45,12 +45,12 @@
   </div>
 
   <div>
-    <label for="url"> URL </label>
+    <label for="url"> Login URL </label>
     <input id="url" type="text" formControlName="url" />
   </div>
 
   <div>
-    <label for="email"> Email </label>
+    <label for="email"> Project Email ID / Username </label>
     <input id="email" type="text" formControlName="email" />
   </div>
 
