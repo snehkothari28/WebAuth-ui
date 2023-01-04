@@ -127,6 +127,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             closeButton: true,
             timeOut: 2000,
           });
+          this.router.navigateByUrl('/home');
         },
         error: (err) => {
           this.errorFunction(err);
@@ -141,13 +142,15 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             closeButton: true,
             timeOut: 2000,
           });
+          this.router.navigateByUrl('/home');
         },
         error: (err) => {
           this.errorFunction(err);
         },
       });
     }
-    this.router.navigateByUrl('/home');
+
+    
   }
 
   get delegationTableFormArray() {

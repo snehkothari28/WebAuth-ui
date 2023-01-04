@@ -15,6 +15,7 @@ import { TotpCreatorComponent } from './totp-creator/totp-creator.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor';
 import { AuthGuard } from './auth/auth.guard';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { AuthGuard } from './auth/auth.guard';
     AllTotpFetcherComponent,
     TotpCreatorComponent,
     LoginComponent,
+    TopBarComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

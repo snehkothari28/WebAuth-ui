@@ -13,16 +13,14 @@ import { TotpService } from '../totp.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private ngZone: NgZone,
     private toastr: ToastrService
   ) {}
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (this.router.url != '/login') {
       console.log('navigating to login' + ' from ' + this.router.url);
       this.router.navigateByUrl('/login');
@@ -70,4 +68,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     console.log('caught in error' + error);
     this.router.navigateByUrl('/login');
   }
+  companyName = environment.companyName;
+
 }

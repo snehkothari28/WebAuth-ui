@@ -42,7 +42,7 @@ h3,
 h4,
 h5,
 h6 {
- text-align: center;  
+  text-align: center;
 }
 
 p {
@@ -182,7 +182,7 @@ iframe {
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #f2f2f2;
-  text-align: center
+  text-align: center;
 }
 
 .row.header .cell {
@@ -193,7 +193,7 @@ iframe {
   font-weight: unset !important;
   padding-top: 19px;
   padding-bottom: 19px;
-  text-align: center
+  text-align: center;
 }
 
 .row .cell:nth-child(1) {
@@ -286,8 +286,6 @@ button:disabled {
   cursor: auto;
 }
 
-
-
 .create-icon {
   font-size: 20px;
   position: absolute;
@@ -299,4 +297,13 @@ button:disabled {
   top: 2px;
   max-width: 20px;
   max-height: 20px;
+}
+
+.noOtp {
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
 }
