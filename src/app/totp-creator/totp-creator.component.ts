@@ -21,6 +21,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
     secret: ['', [Validators.required, Validators.minLength(4)]],
+    type:[''],
     url: [''],
     email: [''],
     password: [''],
@@ -64,6 +65,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             this.isOwner = data.owner;
             this.isWriteUser = data.writeUser;
             this.addSecret.controls.name.setValue(data.name);
+            this.addSecret.controls.type.setValue(data.type);
             this.addSecret.controls.url.setValue(data.url);
             this.addSecret.controls.email.setValue(data.email);
             this.addSecret.controls.password.setValue(data.password);
@@ -112,6 +114,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined
         : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
+      type: this.addSecret.get('type')?.value ?? '',  
       id: this.updateId,
       url: this.addSecret.get('url')?.value ?? '',
       email: this.addSecret.get('email')?.value ?? '',

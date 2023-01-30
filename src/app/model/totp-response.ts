@@ -4,6 +4,7 @@ export interface TotpResponse {
   id: Number;
   name: string;
   secret: string;
+  type: string;
   url: string;
   email: string;
   password: string;
