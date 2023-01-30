@@ -4,5 +4,14 @@ h3,
 h4,
 h5,
 h6 {
- text-align: center;  
+ text-align: center;
+ margin-top: -60px;  
+}
+@media screen and (max-width:600px) {
+
+    h1,h2,h3,h4,h5,h6{
+
+        margin-top: 30px;
+    }
+    
 }

@@ -15,6 +15,8 @@ import validator from 'validator';
 export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
+  searchText:any;
+  
 
   companyName = environment.companyName;
   constructor(

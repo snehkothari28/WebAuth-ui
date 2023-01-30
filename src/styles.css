@@ -1,3 +1,7 @@
+html{
+  background-color:#ccf5ff;
+  
+}
 router-outlet + * {
   padding: 0 16px;
 }
