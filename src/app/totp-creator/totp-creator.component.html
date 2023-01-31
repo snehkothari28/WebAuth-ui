@@ -1,8 +1,14 @@
 <a routerLink="/home" class="home-link"> Go to Home</a>
 <form [formGroup]="addSecret" (ngSubmit)="onSubmit()" novalidate>
-  <div>
-    <label for="name"> Project Name </label>
-    <input id="name" type="text" formControlName="name" />
+  <div class="header"></div>
+  <div class="container">
+  <div class="whiteBox">
+    <button type="button" routerLink="/home" class="close_button">X</button>
+    
+  <div class="space">
+    
+    <label for="name" style="color:#04acf4"> Project Name </label>
+    <input id="name" type="text" formControlName="name" placeholder="Project Name" />
     <div
       *ngIf="
         addSecret.controls['name'].invalid &&
@@ -16,15 +22,15 @@
       <div *ngIf="addSecret.controls['name'].errors?.['minlength']">
         Name should be atleast 4 character long.
       </div>
-    </div>
   </div>
 
   <div *ngIf="!isUpdateRequest">
-    <label for="secret"> Secret Key </label>
+    <label for="secret" style="color:#04acf4"> Secret Key </label>
     <input
       id="secret"
       type="text"
       formControlName="secret"
+      placeholder="Secret Key"
       oninput="this.value = this.value.split(' ').join('')"
     />
     <div
@@ -45,27 +51,41 @@
   </div>
 
   <div>
-    <label for="url"> Login URL </label>
-    <input id="url" type="text" formControlName="url" />
+    <label for="type" style="color:#04acf4"> Type </label>
+    <!-- <input id="type" type="text" formControlName="type" placeholder="Type" /> -->
+    <select name="type" id="type" formControlName="type">
+      <option value="AWS">AWS</option>
+      <option value="Salesforce">Salesforce</option>
+      <option value="Mail">Mail</option>
+      <option value="Others">Others</option>
+    </select>
+  </div>
+  
+
+  <div>
+    <label for="url" style="color:#04acf4"> Login URL </label>
+    <input id="url" type="text" formControlName="url" placeholder="Login URL" />
   </div>
 
   <div>
-    <label for="email"> Project Email ID / Username </label>
-    <input id="email" type="text" formControlName="email" />
+    <label for="email" style="color:#04acf4"> Project Email ID/Username </label>
+    <input id="email" type="text" formControlName="email" placeholder="Project Email ID/Username" />
   </div>
 
   <div>
-    <label for="password"> Password </label>
-    <input id="pass" type="text" formControlName="password" />
+    <label for="password" style="color:#04acf4"> Password </label>
+    <input id="pass" type="text" formControlName="password" placeholder="Password"/>
   </div>
+</div>
+
   <br />
   <br />
   <ng-container *ngIf="delegationTableFormArray.length">
     <table id="delegation_table">
       <tr>
-        <th>Email</th>
-        <th>Can add other users?</th>
-        <th>Remove</th>
+        <th style="padding: 0px 166px 16px 0px">Email</th>
+        <th style="display: flex; margin: -15px 56px 0px -46px;;">Can add other users?</th>
+        <th style="padding:0px 16px 14px 23px;">Remove</th>
       </tr>
       <ng-container formArrayName="delegationTable">
         <ng-container
@@ -85,6 +105,7 @@
                 value="email"
                 formControlName="email"
                 oninput="this.value = this.value.split(' ').join('')"
+                style="margin-left: -36px;"
               />
             </td>
             <td>
@@ -95,11 +116,11 @@
                 placeholder=""
                 value="isWriteUser"
                 formControlName="isWriteUser"
-                style="text-align: center;"
+                style="text-align: center; margin:3px 0px 5px -11px;"
               />
             </td>
             <td>
-              <button [disabled]="!isOwner" (click)="deleteFieldValue(i)">
+              <button [disabled]="!isOwner" (click)="deleteFieldValue(i)" style="padding-right:-10px">
                 Remove user
               </button>
             </td>
@@ -139,7 +160,7 @@
       <br />
     </table>
   </ng-container>
-  <button mat-raised-button (click)="addFieldValue()" type="button" style="margin-left: 50px;">
+  <button mat-raised-button (click)="addFieldValue()" type="button" class="btn1" style="background-color: #04acf4; color: white;" >
     Add Users to delegate this access
   </button>
   <br />
@@ -157,4 +178,6 @@
       <h4>Add TOTP</h4>
     </ng-template>
   </button>
+  </div>
+  </div>
 </form>
