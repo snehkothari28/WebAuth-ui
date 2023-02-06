@@ -5,6 +5,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import {HostListener } from '@angular/core';
 import validator from 'validator';
 
 @Component({
@@ -16,8 +17,61 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
   searchText:any;
+  isVisible=true;
+  toggle = true;
+  // status = 'Auto-blur OFF'; 
+  status = 'Auto-blur ON'; 
+  test=true;
   
+  @HostListener('window:focus', ['$event'])
+  onFocused() {
+    this.isVisible = true;
+  }
+  @HostListener('window:blur', ['$event'])
+  onBlur() {
+    
+    if(!this.toggle ){
+      this.isVisible = false;
+    }
+    this.toastr.warning("Window out of focus","",{disableTimeOut:true,closeButton:true});   
+  
+  }   
+  enableDisableRule() {
+    this.toggle = !this.toggle;
+    // this.status = this.toggle ? 'Auto-blur OFF' : 'Auto-blur ON';
+    this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
 
+    // if(this.status='OFF')
+    // {
+    //   this.onBlur();
+    //   this.ngOnInit();
+    // }
+    // else
+    // {
+    //   this.onFocused();
+    //   this.ngOnInit();
+    // } 
+    
+    // if(this.status=='Auto-blur OFF')
+    // {
+    //   this.test=true;
+    //   this.getAllOtps();
+    // }
+    // else
+    // {
+    //   this.test=false;
+    // }
+    if(this.status=='Auto-blur ON')
+    {
+      this.test=false;
+    }
+    else
+    {
+      this.test=true;
+      this.getAllOtps();
+    }
+}  
+  
   companyName = environment.companyName;
   constructor(
     private totpService: TotpService,
@@ -25,6 +79,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private router: Router
   ) {}
+  
   ngOnDestroy(): void {
     clearInterval(this.interval);
   }
@@ -32,8 +87,15 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllOtps();
     this.interval = setInterval(() => {
-      this.getAllOtps();
-    }, 10000);
+      if(this.isVisible )
+      {
+        this.getAllOtps();
+      }
+      else
+      {
+        console.log("Window out of focus");       
+      }
+      },30000);
   }
 
   getAllOtps() {
@@ -46,7 +108,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       error: (err) => {
         this.errorFunction(err);
       },
-    });
+    });     
   }
 
   copyTotp(textToCopy: string) {

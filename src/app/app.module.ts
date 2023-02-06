@@ -17,14 +17,14 @@ import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor
 import { AuthGuard } from './auth/auth.guard';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   imports: [
     Ng2SearchPipeModule,
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, 
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -53,7 +53,11 @@ import { FormsModule } from '@angular/forms';
       },
     ]),
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot(
+      {
+        preventDuplicates: true
+      }
+    ), // ToastrModule added
     MatCardModule,
     MatFormFieldModule,
     MatButtonModule,
