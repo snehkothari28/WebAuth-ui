@@ -9,7 +9,7 @@
 } */
 
 * {
-  margin: 0;
+  margin: 7px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -58,7 +58,8 @@ li {
 input {
   display: block;
   outline: none;
-  border: none !important;
+  height: 30px;
+  width: 200px;
 }
 
 textarea {
@@ -84,6 +85,7 @@ button:hover {
 iframe {
   border: none !important;
 }
+
 
 .limiter {
   width: 100%;
@@ -119,9 +121,22 @@ iframe {
   margin: 0;
 }
 
+.search_op{
+  position: absolute;
+  top: 115px;
+  right: 12px;
+}
+
 @media screen and (max-width: 768px) {
+
   .table {
     display: block;
+    overflow: scroll;
+  }
+  .search_op{
+    position: relative;
+    top: 34px;
+    left: -6px;
   }
 }
 
@@ -136,18 +151,13 @@ iframe {
 }
 
 @media screen and (max-width: 768px) {
-  .row {
-    display: block;
-  }
-
+  
   .row.header {
     padding: 0;
     height: 0;
   }
 
-  .row.header .cell {
-    display: none;
-  }
+ 
 
   .row .cell:before {
     font-family: Poppins-Bold;
@@ -159,17 +169,20 @@ iframe {
     margin-bottom: 13px;
     content: attr(data-title);
     min-width: 98px;
-    display: block;
-  }
+    display: none;
+  } 
 }
 
 .cell {
   display: table-cell;
+  padding: 20px ;
+  
+
 }
 
 @media screen and (max-width: 768px) {
   .cell {
-    display: block;
+    display: table-cell ;
   }
 }
 
@@ -180,6 +193,7 @@ iframe {
   line-height: 1.2;
   font-weight: unset !important;
   padding-top: 20px;
+  padding: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #f2f2f2;
   text-align: center;
@@ -234,19 +248,20 @@ iframe {
 
   .row .cell {
     border: none;
-    padding-left: 30px;
+    padding-left: 3px;
     padding-top: 16px;
     padding-bottom: 16px;
   }
 
   .row .cell:nth-child(1) {
-    padding-left: 30px;
+    padding-left: 3px;
   }
 
   .row .cell {
     font-family: Poppins-Regular;
     font-size: 18px;
     color: #555;
+    padding: 20px;
     line-height: 1.2;
     font-weight: unset !important;
   }
@@ -287,14 +302,12 @@ button:disabled {
 }
 
 .create-icon {
-  font-size: 20px;
-  position: absolute;
-  top: 20px;
-  right: 50px;
+  font-size: 16px;
+  text-decoration: none;
 }
 .img-create-icon {
   position: relative;
-  top: 2px;
+  top: 10px;
   max-width: 20px;
   max-height: 20px;
 }
@@ -307,3 +320,12 @@ button:disabled {
   transform: translate(-50%, -50%);
   margin: 0;
 }
+@media screen and (min-width: 769px) {
+   .create-icon{ 
+    position: absolute;
+    right: 55px;
+    top: 43px;
+  }
+}
+
+

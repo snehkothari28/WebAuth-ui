@@ -16,12 +16,16 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: 'home',

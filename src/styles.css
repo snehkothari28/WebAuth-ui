@@ -2,7 +2,9 @@ router-outlet + * {
   padding: 0 16px;
 }
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
-
+html{
+  background: rgb(4,172,244);  
+}
 /* position */
 .toast-center-center {
   top: 50%;
@@ -202,4 +204,5 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
