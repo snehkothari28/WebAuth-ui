@@ -12,9 +12,14 @@ import validator from 'validator';
   templateUrl: './all-totp-fetcher.component.html',
   styleUrls: ['./all-totp-fetcher.component.css'],
 })
+
 export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
+  searchText: any;                  //declare a vairiable for filter by any text
+  FilterType:any;                  //declare a vairiable for filter by type
+  selectedTeam : any;
+ 
 
   companyName = environment.companyName;
   constructor(

@@ -6,30 +6,54 @@
   href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
   rel="stylesheet"
 />
+<div class="header"></div>
 
-<app-top-bar></app-top-bar>
   
-<div *ngIf="allOtps; else noOtp">
-  <a routerLink="/createTOTP" class="create-icon"
+
+<div *ngIf="allOtps">
+  <a routerLink="/createTOTP" class="create-icon" style="margin-right:-30px;"
     ><img
       class="img-create-icon"
       src="../../assets/icons/icons8-add-new-100.png"
-    />Add new TOTP
+    />Add new TOTP  
   </a>
-  <div class="wrap-table100">
-    <div class="table">
+  <div class="search_name">
+    <input
+      type="text"
+      class="search_op"
+      [(ngModel)]="searchText"
+      placeholder=" Search Type here..."
+    />
+  </div>
+   <div class="wrap-table100">
+    
+      <div class="table" id="myTable">
       <div class="row header">
         <div class="cell">Name</div>
-        <div class="cell">TOTP Secret</div>
+        <div class="cell">TOTP Secret</div> 
+        <div class="cell">
+
+          <select   [(ngModel)]="FilterType" >
+            <option value=""  selected>Select your Type
+            <option value="AWS">AWS
+            <option value="Salesforce">Salesforce
+            <option value="Mail">Mail
+             <option value="Others">Others
+          </select>
+        </div>
+        
         <div class="cell">URL</div>
         <div class="cell">Email/Username</div>
         <div class="cell">Password</div>
         <div class="cell">Edit link</div>
         <div class="cell">Delete link</div>
       </div>
-      <ng-container *ngFor="let totpResponse of allOtps">
+       
+        <ng-container *ngFor="let totpResponse of allOtps | filter : FilterType | filter : searchText">
+         
+       
         <div class="row">
-          <div class="cell" data-title="Name">
+          <div class="cell" id="name_list" data-title="Name">
             {{ totpResponse.name }}
           </div>
           <div class="cell">
@@ -37,6 +61,10 @@
               {{ totpResponse.secret }}
             </button>
           </div>
+          <div class="cell" data-title="type">
+            {{ totpResponse.type }}
+          </div>
+          
           <div class="cell">
             <button (click)="goToLink(totpResponse.url)">
               {{ totpResponse.url }}
@@ -71,6 +99,7 @@
     </div>
   </div>
 </div>
+
 <ng-template #noOtp>
   <h2 class="noOtp"> You have not been delegated any project creds yet. <br/>
     Either ask the project owner to add one or create one yourself if you own the project.
