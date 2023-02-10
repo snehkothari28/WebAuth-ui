@@ -7,11 +7,10 @@
   rel="stylesheet"
 />
 
-<div class="header"></div>
-<app-top-bar></app-top-bar>
+<div class="header top-bar-header"></div>
+<app-top-bar class="top-bar"></app-top-bar>
 
-
-<div class="search">
+<div>
   <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
    placeholder="Search here">
 </div>
@@ -33,7 +32,7 @@
   <div class="wrap-table100">
     <div style="overflow: scroll;">
       <table style="width: 100%;">
-        <div class="table" [ngClass]="{'overlay':!isVisible &&test}" >
+        <div class="table" [ngClass]="{'overlay':!isVisible && autoBlur}" >
           <div class="row header">
             <div class="cell">Name</div>
             <div class="cell">Type</div>

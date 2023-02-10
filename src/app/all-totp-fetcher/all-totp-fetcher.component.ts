@@ -5,7 +5,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import {HostListener } from '@angular/core';
+import { HostListener } from '@angular/core';
 import validator from 'validator';
 
 @Component({
@@ -16,62 +16,42 @@ import validator from 'validator';
 export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
-  searchText:any;
-  isVisible=true;
+  searchText: any;
+  isVisible = true;
   toggle = true;
-  // status = 'Auto-blur OFF'; 
-  status = 'Auto-blur ON'; 
-  test=true;
-  
+  status = 'Auto-blur ON';
+  autoBlur = true;
+  isMobilePage = false;
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
+    setTimeout(() => {
+      if (this.isVisible) this.toastr.clear();
+    }, 1500);
   }
   @HostListener('window:blur', ['$event'])
   onBlur() {
-    
-    if(!this.toggle ){
+    if (this.toggle) {
       this.isVisible = false;
+      this.toastr.warning(
+        "Window out of focus. </br> Turn off 'Auto-blur' switch to disable",
+        '',
+        { disableTimeOut: true, closeButton: true }
+      );
     }
-    this.toastr.warning("Window out of focus","",{disableTimeOut:true,closeButton:true});   
-  
-  }   
+  }
   enableDisableRule() {
     this.toggle = !this.toggle;
-    // this.status = this.toggle ? 'Auto-blur OFF' : 'Auto-blur ON';
     this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
 
-    // if(this.status='OFF')
-    // {
-    //   this.onBlur();
-    //   this.ngOnInit();
-    // }
-    // else
-    // {
-    //   this.onFocused();
-    //   this.ngOnInit();
-    // } 
-    
-    // if(this.status=='Auto-blur OFF')
-    // {
-    //   this.test=true;
-    //   this.getAllOtps();
-    // }
-    // else
-    // {
-    //   this.test=false;
-    // }
-    if(this.status=='Auto-blur ON')
-    {
-      this.test=false;
-    }
-    else
-    {
-      this.test=true;
+    if (this.status == 'Auto-blur ON') {
+      this.autoBlur = true;
+    } else {
+      this.autoBlur = false;
       this.getAllOtps();
     }
-}  
-  
+  }
+
   companyName = environment.companyName;
   constructor(
     private totpService: TotpService,
@@ -79,7 +59,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private router: Router
   ) {}
-  
+
   ngOnDestroy(): void {
     clearInterval(this.interval);
   }
@@ -87,15 +67,12 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllOtps();
     this.interval = setInterval(() => {
-      if(this.isVisible )
-      {
+      if (this.isVisible) {
         this.getAllOtps();
+      } else {
+        console.log('Window out of focus');
       }
-      else
-      {
-        console.log("Window out of focus");       
-      }
-      },30000);
+    }, 30000);
   }
 
   getAllOtps() {
@@ -108,7 +85,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       error: (err) => {
         this.errorFunction(err);
       },
-    });     
+    });
   }
 
   copyTotp(textToCopy: string) {
@@ -158,6 +135,5 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       console.log(url);
       window.open(url);
     }
-    
   }
 }
