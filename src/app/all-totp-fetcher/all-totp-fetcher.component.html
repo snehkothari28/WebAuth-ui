@@ -7,18 +7,26 @@
   rel="stylesheet"
 />
 
-<div class="header top-bar-header"></div>
-<app-top-bar class="top-bar"></app-top-bar>
+<div class="header"></div>
+<app-top-bar></app-top-bar>
 
-<div>
-  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
-   placeholder="Search here">
+<div class="search">
+  <input
+    class="form-control"
+    type="text"
+    name="search"
+    [(ngModel)]="searchText"
+    autocomplete="off"
+    placeholder="Search here"
+  />
 </div>
 
-<button class="start-stop"
-    (click)="enableDisableRule()" 
-    [ngClass]="{'green' : toggle, 'red': !toggle}">
-    {{status}}
+<button
+  class="start-stop"
+  (click)="enableDisableRule()"
+  [ngClass]="{ green: toggle, red: !toggle }"
+>
+  {{ status }}
 </button>
 <div *ngIf="allOtps; else noOtp">
   <a routerLink="/createTOTP" class="create-icon" style="margin-right: -30px"
@@ -27,12 +35,11 @@
       src="../../assets/icons/icons8-add-new-100.png"
     />Add new TOTP
   </a>
-  
 
   <div class="wrap-table100">
-    <div style="overflow: scroll;">
-      <table style="width: 100%;">
-        <div class="table" [ngClass]="{'overlay':!isVisible && autoBlur}" >
+    <div style="overflow: scroll">
+      <table style="width: 100%">
+        <div class="table" [ngClass]="{ overlay: !isVisible }">
           <div class="row header">
             <div class="cell">Name</div>
             <div class="cell">Type</div>
@@ -43,7 +50,9 @@
             <div class="cell">Edit link</div>
             <div class="cell">Delete link</div>
           </div>
-          <ng-container *ngFor="let totpResponse of allOtps | filter:searchText">
+          <ng-container
+            *ngFor="let totpResponse of allOtps | filter : searchText"
+          >
             <div class="row">
               <div class="cell">
                 {{ totpResponse.name }}

@@ -34,7 +34,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     if (this.toggle) {
       this.isVisible = false;
       this.toastr.warning(
-        "Window out of focus. </br> Turn off 'Auto-blur' switch to disable",
+        "Window out of focus.Turn off 'Auto-blur' switch to disable",
         '',
         { disableTimeOut: true, closeButton: true }
       );
