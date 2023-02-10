@@ -1,27 +1,79 @@
+.header {
+  width: 99.3%;
+  height: 80px;
+  display: block;
+  background-color: white;
+  margin-top: -21px;
+  background-image: url(src\assets\icons\shrine_software.png);
+  background-repeat: no-repeat;
+  background-size: 150px 90px;
+  background-position: 10px 4px;
+  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+}
+.home-link {
+  color: #04acf4;
+  font-weight: bold;
+  font-size: 40px;
+  font-family: sans-serif;
+  text-decoration: none;
+  margin-top: 15px;
+  margin-right: 1px;
+}
 .alert {
   color: red;
 }
-
+.space {
+  margin-top: 20px;
+}
+.container {
+  padding-top: 50px;
+}
+.whiteBox {
+  background-color: white;
+  height: auto;
+  width: 500px;
+  margin-top: 50px;
+  margin: auto;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.208);
+}
+.close_button {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 600;
+  margin-left: auto;
+  background-color: #04acf4;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.close_button:hover {
+  background-color: rgba(255, 30, 0, 0.759);
+}
 input[type="text"],
-select {
-  width: 30%;
-  padding: 12px 20px;
-  /* margin: 8px 0; */
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #04acf4;
+  border-radius: 10px;
   box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  color: #04acf4;
 }
 .form-submit {
   width: 40%;
   align-items: center;
   background-color: #4caf50;
   color: white;
-  /* padding: 14px 20px; */
-  /* margin: 8px 0; */
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  margin-left: 150px;
 }
 
 .form-submit:hover {
@@ -31,38 +83,50 @@ select {
   background-color: #ccc;
 }
 .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20px;
-    border: 3px solid green; 
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  border: 3px solid green;
+}
+.items {
+  display: flex;
+  flex-direction: column;
+}
 div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
   padding: 5px;
 }
-
 #delegationTable {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  left: 80px;
+  padding-left: 10px;
 }
 
-#delegationTable td, #delegationTable th {
+#delegation_table {
+  margin-left: 30px;
+}
+
+#delegationTable td,
+#delegationTable th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#delegationTable tr:nth-child(even){background-color: #f2f2f2;}
+#delegationTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-#delegationTable tr:hover {background-color: #ddd;}
+#delegationTable tr:hover {
+  background-color: #ddd;
+}
 
 #delegationTable th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
 }
 
@@ -71,4 +135,68 @@ div {
   position: absolute;
   top: 20px;
   right: 50px;
+}
+.btn1 {
+  margin-left: 135px;
+}
+#id1 {
+  padding-left: 1px;
+}
+#id4 {
+  margin-left: -46px;
+  width: 110px;
+  display: block;
+}
+#id5 {
+  display: block;
+  margin: auto;
+}
+#id6 {
+  display: block;
+  margin: auto;
+}
+@media (max-width: 1000px) {
+  .container {
+    padding-left: 10px;
+  }
+  .whiteBox {
+    background-color: white;
+    height: auto;
+    width: auto;
+    margin: auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.508);
+  }
+  .whiteBox a {
+    background-color: red;
+    color: white;
+    margin-left: 330px;
+    padding: 5px;
+    text-decoration: none;
+  }
+  .btn1 {
+    display: block;
+    margin: auto;
+  }
+
+  .form-submit {
+    width: 40%;
+    align-items: center;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    display: block;
+    margin: auto;
+  }
+  .home-link {
+    color: #04acf4;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: sans-serif;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-right: -20px;
+  }
 }

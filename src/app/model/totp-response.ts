@@ -3,6 +3,7 @@ import { DelegationModel } from "./delegation-model";
 export interface TotpResponse {
   id: Number;
   name: string;
+  type: string;
   secret: string;
   url: string;
   email: string;

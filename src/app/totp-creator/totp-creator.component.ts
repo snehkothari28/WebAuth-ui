@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TotpCreatorComponent implements OnInit, OnDestroy {
   private sub: any;
-
+  searchText:any;
   isUpdateRequest: boolean = false;
   updateId: Number | undefined;
   isWriteUser: boolean = false;
@@ -20,6 +20,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   companyDomain = environment.companyDomain;
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
+    type: [''],
     secret: ['', [Validators.required, Validators.minLength(4)]],
     url: [''],
     email: [''],
@@ -64,6 +65,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             this.isOwner = data.owner;
             this.isWriteUser = data.writeUser;
             this.addSecret.controls.name.setValue(data.name);
+            this.addSecret.controls.type.setValue(data.type);
             this.addSecret.controls.url.setValue(data.url);
             this.addSecret.controls.email.setValue(data.email);
             this.addSecret.controls.password.setValue(data.password);
@@ -109,6 +111,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
 
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
+      type: this.addSecret.get('type')?.value?? '',
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined
         : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
@@ -148,9 +151,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
           this.errorFunction(err);
         },
       });
-    }
-
-    
+    } 
   }
 
   get delegationTableFormArray() {

@@ -7,72 +7,105 @@
   rel="stylesheet"
 />
 
+<div class="header"></div>
 <app-top-bar></app-top-bar>
-  
+
+<div class="search">
+  <input
+    class="form-control"
+    type="text"
+    name="search"
+    [(ngModel)]="searchText"
+    autocomplete="off"
+    placeholder="Search here"
+  />
+</div>
+
+<button
+  class="start-stop"
+  (click)="enableDisableRule()"
+  [ngClass]="{ green: toggle, red: !toggle }"
+>
+  {{ status }}
+</button>
 <div *ngIf="allOtps; else noOtp">
-  <a routerLink="/createTOTP" class="create-icon"
+  <a routerLink="/createTOTP" class="create-icon" style="margin-right: -30px"
     ><img
       class="img-create-icon"
       src="../../assets/icons/icons8-add-new-100.png"
     />Add new TOTP
   </a>
+
   <div class="wrap-table100">
-    <div class="table">
-      <div class="row header">
-        <div class="cell">Name</div>
-        <div class="cell">TOTP Secret</div>
-        <div class="cell">URL</div>
-        <div class="cell">Email/Username</div>
-        <div class="cell">Password</div>
-        <div class="cell">Edit link</div>
-        <div class="cell">Delete link</div>
-      </div>
-      <ng-container *ngFor="let totpResponse of allOtps">
-        <div class="row">
-          <div class="cell" data-title="Name">
-            {{ totpResponse.name }}
+    <div style="overflow: scroll">
+      <table style="width: 100%">
+        <div class="table" [ngClass]="{ overlay: !isVisible }">
+          <div class="row header">
+            <div class="cell">Name</div>
+            <div class="cell">Type</div>
+            <div class="cell">TOTP Secret</div>
+            <div class="cell">URL</div>
+            <div class="cell">Email/Username</div>
+            <div class="cell">Password</div>
+            <div class="cell">Edit link</div>
+            <div class="cell">Delete link</div>
           </div>
-          <div class="cell">
-            <button (click)="copyTotp(totpResponse.secret)">
-              {{ totpResponse.secret }}
-            </button>
-          </div>
-          <div class="cell">
-            <button (click)="goToLink(totpResponse.url)">
-              {{ totpResponse.url }}
-            </button>
-          </div>
-          <div class="cell">
-            <button (click)="copyTotp(totpResponse.email)">
-              {{ totpResponse.email }}
-            </button>
-          </div>
-
-          <div class="cell">
-            <button (click)="copyTotp(totpResponse.password)">
-              {{ totpResponse.password }}
-            </button>
-          </div>
-          <div
-            *ngIf="totpResponse.owner || totpResponse.writeUser; else empty"
-            class="cell"
+          <ng-container
+            *ngFor="let totpResponse of allOtps | filter : searchText"
           >
-            <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
-          </div>
+            <div class="row">
+              <div class="cell">
+                {{ totpResponse.name }}
+              </div>
+              <div class="cell">
+                {{ totpResponse.type }}
+              </div>
+              <div class="cell">
+                <button (click)="copyTotp(totpResponse.secret)">
+                  {{ totpResponse.secret }}
+                </button>
+              </div>
+              <div class="cell">
+                <button (click)="goToLink(totpResponse.url)">
+                  {{ totpResponse.url }}
+                </button>
+              </div>
+              <div class="cell">
+                <button (click)="copyTotp(totpResponse.email)">
+                  {{ totpResponse.email }}
+                </button>
+              </div>
 
-          <div *ngIf="totpResponse.owner; else empty" class="cell">
-            <button (click)="deleteSecret(totpResponse)">Delete</button>
-          </div>
+              <div class="cell">
+                <button (click)="copyTotp(totpResponse.password)">
+                  {{ totpResponse.password }}
+                </button>
+              </div>
+              <div
+                *ngIf="totpResponse.owner || totpResponse.writeUser; else empty"
+                class="cell"
+              >
+                <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
+              </div>
+
+              <div *ngIf="totpResponse.owner; else empty" class="cell">
+                <button (click)="deleteSecret(totpResponse)">Delete</button>
+              </div>
+            </div>
+            <ng-template #empty>
+              <div class="cell"></div>
+            </ng-template>
+          </ng-container>
         </div>
-        <ng-template #empty>
-          <div class="cell"></div>
-        </ng-template>
-      </ng-container>
+      </table>
     </div>
   </div>
 </div>
+
 <ng-template #noOtp>
-  <h2 class="noOtp"> You have not been delegated any project creds yet. <br/>
-    Either ask the project owner to add one or create one yourself if you own the project.
+  <h2 class="noOtp">
+    You have not been delegated any project creds yet. <br />
+    Either ask the project owner to add one or create one yourself if you own
+    the project.
   </h2>
 </ng-template>

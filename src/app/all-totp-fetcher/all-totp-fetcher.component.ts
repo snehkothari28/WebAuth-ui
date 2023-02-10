@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TotpService } from '../totp.service';
 import { TotpResponse } from '../model/totp-response';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { ToastrService } from 'ngx-toastr';
+import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import {HostListener } from '@angular/core';
 import validator from 'validator';
 
 @Component({
@@ -15,7 +16,35 @@ import validator from 'validator';
 export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
-
+  searchText:any;
+  isVisible=true;
+  toggle=false;
+  activeToast!: ActiveToast<any>;
+  status = ' Auto-blur ON'; 
+  
+  @HostListener('window:focus', ['$event'])
+  onFocused() {
+    this.isVisible = true;
+    this.toastr.clear(this.activeToast.toastId);
+  }
+  @HostListener('window:blur', ['$event'])
+  onBlur() {
+    
+    if(this.toggle){
+      this.isVisible = false;
+      
+    }
+    if(this.isVisible==false)
+    {
+      this.activeToast = this.toastr.warning("Window out of focus","",{disableTimeOut:true,closeButton:true});
+    }
+       
+  }   
+  enableDisableRule() {
+    this.toggle = !this.toggle;
+    this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
+  }  
+  
   companyName = environment.companyName;
   constructor(
     private totpService: TotpService,
@@ -23,15 +52,26 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private router: Router
   ) {}
+  
   ngOnDestroy(): void {
     clearInterval(this.interval);
   }
 
   ngOnInit(): void {
+    this.toggle = !this.toggle;
+    this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
+
     this.getAllOtps();
     this.interval = setInterval(() => {
-      this.getAllOtps();
-    }, 10000);
+      if(this.isVisible )
+      {
+        this.getAllOtps();
+      }
+      else
+      {
+        console.log("Window out of focus");       
+      }
+      },30000);
   }
 
   getAllOtps() {
@@ -44,7 +84,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       error: (err) => {
         this.errorFunction(err);
       },
-    });
+    });     
   }
 
   copyTotp(textToCopy: string) {
