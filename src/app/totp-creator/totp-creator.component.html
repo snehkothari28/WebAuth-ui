@@ -29,29 +29,6 @@
             Name should be atleast 4 character long.
           </div>
         </div>
-
-        <!-- <label for="type" style="color: #04acf4">Typee</label>
-        <input
-          id="typee"
-          type="text"
-          formControlName="Typee"
-          placeholder="Project typee"
-        />
-        <div
-          *ngIf="
-            addSecret.controls['typee'].invalid &&
-            (addSecret.controls['typee'].dirty ||
-              addSecret.controls['typee'].touched)
-          "
-          class="alert"
-        >
-          <div *ngIf="addSecret.controls['typee'].errors?.['required']">
-            Type is required.
-          </div>
-          <div *ngIf="addSecret.controls['typee'].errors?.['minlength']">
-            Type should be atleast 4 character long.
-          </div>
-        </div> -->
         <div>
           <label for="type" style="color: #04acf4"> Type </label>
           <select name="type" id="type" formControlName="type">
@@ -128,91 +105,92 @@
           <div class="col-3"></div>
           <div class="col-6">
             <ng-container *ngIf="delegationTableFormArray.length">
-              <table id="delegation_table">
-                <tr>
-                  <!-- <div class="style"> -->
-                  <th id="id1">Email</th>
-                  <th id="id2">Can add other users?</th>
-                  <th id="id3">Remove</th>
-                  <!-- </div> -->
-                </tr>
+              <div class="items">
+                <table id="delegation_table">
+                  <tr>
+                    <th id="id1">Email</th>
+                    <th id="id2">Can add other users?</th>
+                    <th id="id3">Remove</th>
+                  </tr>
 
-                <ng-container formArrayName="delegationTable">
-                  <ng-container
-                    *ngFor="
-                      let delegationRow of delegationTableFormArray.controls;
-                      let i = index
-                    "
-                    [formGroupName]="i"
-                  >
-                    <tr>
-                      <td>
-                        <input
-                          type="email"
-                          class="cell"
-                          id="id4"
-                          data-title="Email"
-                          placeholder="Shrine email address"
-                          value="email"
-                          formControlName="email"
-                          oninput="this.value = this.value.split(' ').join('')"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          class="cell"
-                          data-title="Write Access?"
-                          placeholder=""
-                          id="id5"
-                          value="isWriteUser"
-                          formControlName="isWriteUser"
-                        />
-                      </td>
-                      <td>
-                        <button
-                          [disabled]="!isOwner"
-                          (click)="deleteFieldValue(i)"
-                          style="padding-right: -10px"
-                        >
-                          Remove user
-                        </button>
-                      </td>
-                    </tr>
-                    <div
-                      *ngIf="
-                        delegationTableFormArray.controls[i].invalid &&
-                        (delegationTableFormArray.controls[i].dirty ||
-                          delegationTableFormArray.controls[i].touched)
+                  <ng-container formArrayName="delegationTable">
+                    <ng-container
+                      *ngFor="
+                        let delegationRow of delegationTableFormArray.controls;
+                        let i = index
                       "
-                      class="alert"
+                      [formGroupName]="i"
                     >
-                      <p>Error:</p>
+                      <tr>
+                        <td>
+                          <input
+                            type="email"
+                            class="cell"
+                            id="id4"
+                            data-title="Email"
+                            placeholder="Shrine email address"
+                            value="email"
+                            formControlName="email"
+                            oninput="this.value = this.value.split(' ').join('')"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            class="cell"
+                            data-title="Write Access?"
+                            placeholder=""
+                            id="id5"
+                            value="isWriteUser"
+                            formControlName="isWriteUser"
+                          />
+                        </td>
+                        <td>
+                          <button
+                            [disabled]="!isOwner"
+                            (click)="deleteFieldValue(i)"
+                            id="id6"
+                          >
+                            Remove user
+                          </button>
+                        </td>
+                      </tr>
                       <div
-                        *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['required']"
+                        *ngIf="
+                          delegationTableFormArray.controls[i].invalid &&
+                          (delegationTableFormArray.controls[i].dirty ||
+                            delegationTableFormArray.controls[i].touched)
+                        "
+                        class="alert"
                       >
-                        Email is required.
+                        <p>Error:</p>
+                        <div
+                          *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['required']"
+                        >
+                          Email is required.
+                        </div>
+                        <div
+                          *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['minlength']"
+                        >
+                          Check email id.
+                        </div>
+                        <div
+                          *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['pattern']"
+                        >
+                          Please use {{ companyDomain }} email id only
+                        </div>
+                        <div
+                          *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['maxlength']"
+                        >
+                          Mail id should be shorter
+                        </div>
                       </div>
-                      <div
-                        *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['minlength']"
-                      >
-                        Check email id.
-                      </div>
-                      <div
-                        *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['pattern']"
-                      >
-                        Please use {{ companyDomain }} email id only
-                      </div>
-                      <div
-                        *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['maxlength']"
-                      >
-                        Mail id should be shorter
-                      </div>
-                    </div>
+                    </ng-container>
                   </ng-container>
-                </ng-container>
-                <br />
-              </table>
+
+                  <br />
+                </table>
+              </div>
             </ng-container>
           </div>
           <div class="col-3"></div>
