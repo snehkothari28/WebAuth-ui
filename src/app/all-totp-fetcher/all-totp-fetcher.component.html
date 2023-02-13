@@ -42,7 +42,17 @@
         <div class="table" [ngClass]="{ overlay: !isVisible }">
           <div class="row header">
             <div class="cell">Name</div>
-            <div class="cell">Type</div>
+            <div class="cell">Type
+              <select  [(ngModel)]="FilterType" >
+                <option value=""  selected>Select your Type
+                <option value="AWS">AWS
+                <option value="Salesforce">Salesforce
+                <option value="Mail">Mail
+                 <option value="Others">Others
+                  
+                    
+              </select>
+            </div>
             <div class="cell">TOTP Secret</div>
             <div class="cell">URL</div>
             <div class="cell">Email/Username</div>
@@ -51,7 +61,7 @@
             <div class="cell">Delete link</div>
           </div>
           <ng-container
-            *ngFor="let totpResponse of allOtps | filter : searchText"
+            *ngFor="let totpResponse of allOtps | filter : searchText| filter: FilterType"
           >
             <div class="row">
               <div class="cell">

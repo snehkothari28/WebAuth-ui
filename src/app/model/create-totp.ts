@@ -1,4 +1,5 @@
 import { DelegationModel } from './delegation-model';
+import { typeList } from './NewType';
 
 export interface CreateTOTP {
   id: Number | undefined;

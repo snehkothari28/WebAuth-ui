@@ -1,9 +1,11 @@
 import { DelegationModel } from "./delegation-model";
+// import { typeList } from "./NewType";
 
 export interface TotpResponse {
   id: Number;
   name: string;
   type: string;
+  // type: typeList;
   secret: string;
   url: string;
   email: string;
@@ -11,4 +13,5 @@ export interface TotpResponse {
   owner: boolean;
   delegationTable: DelegationModel[];
   writeUser: boolean;
+ 
 }

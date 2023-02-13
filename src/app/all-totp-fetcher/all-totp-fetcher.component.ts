@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HostListener } from '@angular/core';
 import validator from 'validator';
+import { typeList } from '../model/NewType';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -17,11 +18,13 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
   searchText: any;
+  FilterType:any;
   isVisible = true;
   toggle = true;
   status = 'Auto-blur ON';
   autoBlur = true;
   isMobilePage = false;
+
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
@@ -58,7 +61,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private clipboard: Clipboard,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
