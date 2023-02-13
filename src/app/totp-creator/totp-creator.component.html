@@ -29,29 +29,6 @@
             Name should be atleast 4 character long.
           </div>
         </div>
-
-        <!-- <label for="type" style="color: #04acf4">Typee</label>
-        <input
-          id="typee"
-          type="text"
-          formControlName="Typee"
-          placeholder="Project typee"
-        />
-        <div
-          *ngIf="
-            addSecret.controls['typee'].invalid &&
-            (addSecret.controls['typee'].dirty ||
-              addSecret.controls['typee'].touched)
-          "
-          class="alert"
-        >
-          <div *ngIf="addSecret.controls['typee'].errors?.['required']">
-            Type is required.
-          </div>
-          <div *ngIf="addSecret.controls['typee'].errors?.['minlength']">
-            Type should be atleast 4 character long.
-          </div>
-        </div> -->
         <div>
           <label for="type" style="color: #04acf4"> Type </label>
           <select name="type" id="type" formControlName="type">
@@ -173,7 +150,7 @@
                         <button
                           [disabled]="!isOwner"
                           (click)="deleteFieldValue(i)"
-                          style="padding-right: -10px"
+                           id="removeUser"
                         >
                           Remove user
                         </button>

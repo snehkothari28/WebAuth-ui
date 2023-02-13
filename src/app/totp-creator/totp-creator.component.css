@@ -25,19 +25,14 @@
 .space {
   margin-top: 20px;
 }
-.container {
-  padding-top: 50px;
-}
 .whiteBox {
   background-color: white;
   height: auto;
   width: 500px;
-  /* margin-left: 450px; */
   margin-top: 50px;
   margin: auto;
   display: block;
   border-radius: 10px;
-  /* border: 2px solid #04acf4; */
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.208);
 }
 .close_button {
@@ -73,8 +68,6 @@ textarea {
   align-items: center;
   background-color: #4caf50;
   color: white;
-  /* padding: 14px 20px; 
-  margin: 8px 0; */
   border: none;
   border-radius: 4px;
   margin-left: 150px;
@@ -106,13 +99,11 @@ div {
 
 #delegation_table {
   margin-left: 30px;
-  padding: 30px;
 }
 
 #delegationTable td,
 #delegationTable th {
   border: 1px solid #ddd;
-  padding: 8px;
 }
 
 #delegationTable tr:nth-child(even) {
@@ -141,28 +132,32 @@ div {
   margin-left: 135px;
 }
 #id1 {
-  padding: 0px 133px 4px 0px;
+  padding: 0px 133px 21px 0px;
 }
 #id2 {
   display: flex;
-  margin: 4px 39px 7px -58px;
+  margin: 0px 0px 0px -44px;
 }
 #id3 {
-  padding: -1px 12px 11px 23px;
+  display: inline-block;
+  margin-left: 172px;
+  margin-top: -43px;
 }
 #id4 {
-  margin-left: -46px;
+  margin-left: -32px;
   width: 110px;
 }
 #id5 {
   text-align: center;
-  margin: 3px 0px 5px 10px;
+  margin: 3px 0px 5px 21px;
+}
+#removeUser
+{
+  display: inline-block;
+  margin-left: -75px;
 }
 @media (max-width: 1000px) {
-  .container
-  {
-    padding-left: 10px;
-  }
+ 
   .whiteBox {
     background-color: white;
     height: auto;
@@ -180,7 +175,6 @@ div {
     text-decoration: none;
   }
   .btn1 {
-    /* margin-left: 60px; */
     display: block;
     margin: auto;
   }
@@ -190,11 +184,8 @@ div {
     align-items: center;
     background-color: #4caf50;
     color: white;
-    /* padding: 14px 20px; 
-  margin: 8px 0; */
     border: none;
     border-radius: 4px;
-    /* margin-left: 105px; */
     display: block;
     margin: auto;
   }
@@ -208,3 +199,173 @@ div {
     margin-right: -20px;
   }
 }
+@media only screen and (max-width: 600px)
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 114px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+  .home-link {
+    color: #04acf4;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: sans-serif;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-right: -40px;
+  }
+  #delegation_table {
+    margin-left: 9px;
+    display: inline-block;
+  }
+  #id1
+  {
+    padding: 0px 25px 0px 0px;
+  }
+  #id2
+  {
+    padding: 14px 16px 0px 45px;
+  }
+  #id3 {
+    display: inline-block;
+    margin-left: 164px;
+    margin-top: -43px;
+  }
+  #id4
+  {
+    margin-left: -17px;
+    width: 93px;
+  }
+  #id5 {
+    text-align: center;
+    margin: 3px 0px 5px 61px;
+  }
+  #removeUser
+  {
+    display: inline-block;
+    margin-left: -75px;
+  }
+}
+@media (min-width: 280px) and (max-width: 320px)
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 2px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+  #id1
+  {
+    padding:0px 29px 0px 0px;
+  }
+  #id2
+  {
+    display:table-caption;
+    margin-left:-37px;
+  }
+  #id3
+  {
+    display: revert;
+    margin-left:89px;
+  }
+  #id4
+  {
+    margin-left: -24px;
+    width: 93px;
+  }
+  #id5
+  {
+    text-align: center;
+    margin: 3px 0px 5px 24px;
+  }
+  #removeUser
+  {
+    display: inline-block;
+    margin-left: 4px;
+  }
+}
+@media (min-width: 412px)
+{
+  #id3
+  {
+    display: inline-block;
+    margin-left: 179px;
+    margin-top: -43px;
+  }
+}
+  @media  (min-width: 768px) and (max-width: 1000px)
+ { 
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 26px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+  #id1
+  {
+    padding: 0px 0px 15px 59px;
+  }
+  #id2
+  {
+    padding: 0px 0px 0px 153px;
+  }
+  #id3
+  {
+    display: inline-block;
+    margin-left:379px;
+  }
+  #id4
+  {
+    margin-left: 51px;
+    width:110px;
+  }
+  #id5
+  {
+    display: inline-block;
+    margin-left: 173px;
+  }
+  #removeUser
+  {
+    display:inline-block;
+    margin-left: -78px;
+  }
+}   
+@media (min-width: 540px) and (max-width:600px) 
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 13px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+  #id1
+  {
+    padding: 0px 25px 12px 20px;
+  }
+  #id2
+  {
+    padding: 0px 24px 0px 115px;
+  }
+  #id3
+  {
+    padding: 0px 0px 0px 141px;
+  }
+  #id5
+  {
+    text-align: center;
+   margin: 3px 0px 5px 134px;
+  }
+  #removeUser
+  {
+    display: inline-block;
+    margin-left: -76px;
+  }
+  
+}
+

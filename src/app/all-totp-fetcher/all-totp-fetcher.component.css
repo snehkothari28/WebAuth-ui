@@ -36,10 +36,10 @@ html {
   display: block;
   background-color: white;
   margin-top: -21px;
-  background-image: url(src\assets\icons\shrine_software.png);
+  background-image: url(src\assets\icons\company-logo.png);
   background-repeat: no-repeat;
   background-size: 150px 90px;
-  background-position: 100px 4px;
+  background-position: 50% 4%;
   box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
 }
 a {
@@ -332,7 +332,37 @@ button:disabled {
   transform: translate(-50%, -50%);
   margin: 0;
 }
-@media (max-width: 1000px) {
+@media (min-width: 280px) and (max-width: 320px)
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 2px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+@media only screen and (min-width: 768px)
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 26px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+@media (min-width: 540px) 
+{
+  .header {
+    background-image: url(src\assets\icons\company-logo.png);
+    background-repeat: no-repeat;
+    background-size: 150px 90px;
+    background-position: 13px 4px;
+    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+@media only screen and (max-width: 1000px) {
   .form-control {
     margin: auto;
     height: 30px;
