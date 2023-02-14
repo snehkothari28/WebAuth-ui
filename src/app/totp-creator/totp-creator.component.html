@@ -29,15 +29,13 @@
             Name should be atleast 4 character long.
           </div>
         </div>
-        <div>
-          <label for="type" style="color: #04acf4"> Type </label>
-          <select name="type" id="type" formControlName="type">
-            <option value="AWS">AWS</option>
-            <option value="MAIL">MAIL</option>
-            <option value="SALESFORCE">SALESFORCE</option>
-            <option value="OTHERS">OTHERS</option>
+
+        <label for="type" style="color: #04acf4"> Type </label>
+        <select name="type" id="type" formControlName="type">
+          <option *ngFor="let t of typeListValues" [ngValue]="t">
+            {{ t }}
+          </option>
           </select>
-        </div>
 
         <div *ngIf="!isUpdateRequest">
           <label for="secret" style="color: #04acf4"> Secret Key </label>
@@ -107,11 +105,9 @@
             <ng-container *ngIf="delegationTableFormArray.length">
               <table id="delegation_table">
                 <tr>
-                  <!-- <div class="style"> -->
                   <th id="id1">Email</th>
                   <th id="id2">Can add other users?</th>
                   <th id="id3">Remove</th>
-                  <!-- </div> -->
                 </tr>
 
                 <ng-container formArrayName="delegationTable">
@@ -150,7 +146,7 @@
                         <button
                           [disabled]="!isOwner"
                           (click)="deleteFieldValue(i)"
-                           id="removeUser"
+                          id="removeUser"
                         >
                           Remove user
                         </button>

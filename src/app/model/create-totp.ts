@@ -4,7 +4,7 @@ import { typeList } from './NewType';
 export interface CreateTOTP {
   id: Number | undefined;
   name: string;
-  type: string;
+  type:typeList;
   secretKey: string | undefined;
   url: string;
   email: string;

@@ -24,7 +24,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   status = 'Auto-blur ON';
   autoBlur = true;
   isMobilePage = false;
-
+  typeListValues = Object.keys(typeList);
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
@@ -61,8 +61,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private clipboard: Clipboard,
     private toastr: ToastrService,
     private router: Router
-  ) {
-  }
+  ) { }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);

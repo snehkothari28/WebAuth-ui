@@ -1,7 +1,7 @@
 export enum typeList
 {
-    AWS,
-    MAIL,
-    SALESFORCE,
-    OTHERS
+    AWS="AWS",
+    MAIL="Mail",
+    SALESFORCE="Salesforce",
+    OTHERS="Others"
 }

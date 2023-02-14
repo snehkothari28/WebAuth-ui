@@ -44,13 +44,8 @@
             <div class="cell">Name</div>
             <div class="cell">Type
               <select  [(ngModel)]="FilterType" >
-                <option value=""  selected>Select your Type
-                <option value="AWS">AWS
-                <option value="Salesforce">Salesforce
-                <option value="Mail">Mail
-                 <option value="Others">Others
-                  
-                    
+                  <option value=""  selected>Select your Type</option>
+                  <option *ngFor="let t of typeListValues" [ngValue]="t">{{t}}</option>
               </select>
             </div>
             <div class="cell">TOTP Secret</div>

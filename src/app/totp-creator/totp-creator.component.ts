@@ -1,16 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateTOTP } from '../model/create-totp';
 import { TotpService } from '../totp.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { typeList } from '../model/NewType';
 @Component({
   selector: 'app-totp-creator',
   templateUrl: './totp-creator.component.html',
   styleUrls: ['./totp-creator.component.css'],
 })
 export class TotpCreatorComponent implements OnInit, OnDestroy {
+  typeListValues = Object.keys(typeList);
+  eTypeList=typeList;
   private sub: any;
   searchText:any;
   isUpdateRequest: boolean = false;
@@ -18,9 +21,10 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   isWriteUser: boolean = false;
   isOwner: boolean = false;
   companyDomain = environment.companyDomain;
+
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
-    type: [''],
+    type: new FormControl<typeList>(typeList.OTHERS,Validators.required),
     secret: ['', [Validators.required, Validators.minLength(4)]],
     url: [''],
     email: [''],
@@ -30,6 +34,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     ]),
   });
 
+  
   createDelegationTableGroup(email: string, writeUser: boolean) {
     return this.formBuilder.group({
       email: [
@@ -51,8 +56,9 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit() {
+    this.addSecret.controls.type.setValue(typeList.OTHERS);
     this.sub = this.route.params.subscribe((params) => {
       this.delegationTableFormArray.removeAt(0);
       if (params['id'] != null) {
@@ -111,7 +117,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
 
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
-      type: this.addSecret.get('type')?.value?? '',
+      type: this.addSecret.get('type')?.value?? typeList.OTHERS,
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined
         : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
