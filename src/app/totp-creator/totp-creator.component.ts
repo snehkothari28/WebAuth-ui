@@ -14,6 +14,7 @@ import { typeList } from '../model/NewType';
 export class TotpCreatorComponent implements OnInit, OnDestroy {
   typeListValues = Object.keys(typeList);
   eTypeList=typeList;
+  typelist:string="OTHERS";
   private sub: any;
   searchText:any;
   isUpdateRequest: boolean = false;
