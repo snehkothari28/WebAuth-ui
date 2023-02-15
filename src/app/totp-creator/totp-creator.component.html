@@ -28,6 +28,9 @@
           <div *ngIf="addSecret.controls['name'].errors?.['minlength']">
             Name should be atleast 4 character long.
           </div>
+          <div *ngIf="addSecret.controls['name'].errors?.['maxlength']">
+            Name should not be more than 90 character.
+          </div>
         </div>
 
         <label for="type" style="color: #04acf4"> Type </label>
@@ -60,6 +63,9 @@
             <div *ngIf="addSecret.controls['secret'].errors?.['minlength']">
               Secret should be atleast 4 character long.
             </div>
+            <div *ngIf="addSecret.controls['name'].errors?.['maxlength']">
+              Secret should not be more than 200 character.
+            </div>
           </div>
         </div>
 
@@ -71,6 +77,18 @@
             formControlName="url"
             placeholder="Login URL"
           />
+          <div
+            *ngIf="
+              addSecret.controls['url'].invalid &&
+              (addSecret.controls['url'].dirty ||
+                addSecret.controls['url'].touched)
+            "
+            class="alert"
+          >
+            <div *ngIf="addSecret.controls['url'].errors?.['maxlength']">
+              Url should not be more than 90 characters. 
+            </div>
+          </div>
         </div>
 
         <div>

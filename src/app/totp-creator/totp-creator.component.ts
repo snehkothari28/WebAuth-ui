@@ -26,8 +26,8 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
     type: new FormControl<typeList>(typeList.OTHERS,Validators.required),
-    secret: ['', [Validators.required, Validators.minLength(4)]],
-    url: [''],
+    secret: ['', [Validators.required, Validators.minLength(4),Validators.maxLength(200)]],
+    url: ['',Validators.maxLength(90)],
     email: [''],
     password: [''],
     delegationTable: this.formBuilder.array([
