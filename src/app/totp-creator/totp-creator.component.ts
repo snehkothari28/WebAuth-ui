@@ -12,7 +12,7 @@ import { typeList } from '../model/NewType';
   styleUrls: ['./totp-creator.component.css'],
 })
 export class TotpCreatorComponent implements OnInit, OnDestroy {
-  typeListValues = Object.keys(typeList);
+  typeListValues:any =Object.keys(typeList);;
   eTypeList=typeList;
   typelist:string="OTHERS";
   private sub: any;
