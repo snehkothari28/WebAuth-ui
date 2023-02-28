@@ -7,8 +7,10 @@
   rel="stylesheet"
 />
 
-<nav class="navbar fixed-top header">
+<nav class="navbar fixed-top nav">
+  <app-top-bar></app-top-bar>
   <div class="container-fluid">
+    
     <a routerLink="/createTOTP" class="create-icon" style="margin-right: -30px"
       ><img
         class="img-create-icon"
@@ -19,7 +21,37 @@
 </nav>
 
 <!-- <div class="header"></div> -->
-<app-top-bar></app-top-bar>
+<!-- <app-top-bar></app-top-bar> -->
+
+
+  <div class="d-flex justify-content-center" >
+    
+      <div class="search">
+        <input
+          class="form-control"
+          type="text"
+          name="search"
+          [(ngModel)]="searchText"
+          autocomplete="off"
+          placeholder="Search here"
+        />
+      </div> 
+      </div>
+  <button
+  class="start-stop"
+  (click)="enableDisableRule()"
+  [ngClass]="{ green: toggle, red: !toggle }"
+>
+  {{ status }} 
+</button>
+
+
+<!-- 
+<form class="form-inline waves-light" mdbWavesEffect>
+  <div class="md-form mt-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+  </div>
+</form>
 
 <div class="search">
   <input
@@ -37,8 +69,8 @@
   (click)="enableDisableRule()"
   [ngClass]="{ green: toggle, red: !toggle }"
 >
-  {{ status }}
-</button>
+  {{ status }} 
+</button> -->
 <div *ngIf="allOtps; else noOtp">
   <a routerLink="/createTOTP" class="create-icon" style="margin-right: -30px"
     ><img
@@ -48,15 +80,18 @@
   </a>
 
   <div class="wrap-table100">
-    <div style="overflow: scroll">
+    <div style="overflow-x: scroll; width: 100%">
       <table style="width: 100%">
         <div class="table" [ngClass]="{ overlay: !isVisible }">
           <div class="row header">
             <div class="cell">Name</div>
-            <div class="cell">Type
-              <select  [(ngModel)]="FilterType" >
-                  <option value=""  selected>Select your Type</option>
-                  <option *ngFor="let t of typeListValues" [ngValue]="t">{{t}}</option>
+            <div class="cell">
+              Type
+              <select class="form-select" [(ngModel)]="FilterType">
+                <option value="" selected>Select your Type</option>
+                <option *ngFor="let t of typeListValues" [ngValue]="t">
+                  {{ t }}
+                </option>
               </select>
             </div>
             <div class="cell">TOTP Secret</div>
@@ -67,7 +102,11 @@
             <div class="cell">Delete link</div>
           </div>
           <ng-container
-            *ngFor="let totpResponse of allOtps | filter : searchText| filter: FilterType"
+            *ngFor="
+              let totpResponse of allOtps
+                | filter : searchText
+                | filter : FilterType
+            "
           >
             <div class="row">
               <div class="cell">

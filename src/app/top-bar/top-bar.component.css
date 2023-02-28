@@ -5,10 +5,10 @@ h4,
 h5,
 h6 {
  text-align: center;
- margin-top: 59px;  
- margin-left:40px ;
+ margin-top: 17px;  
+ margin-left:21px ;
 }
-@media screen and (max-width:600px) {
+@media only screen and (max-width:900px) {
 
     h1,h2,h3,h4,h5,h6{
 
@@ -17,4 +17,4 @@ h6 {
         display: none;
     }
    
-}
+} 
