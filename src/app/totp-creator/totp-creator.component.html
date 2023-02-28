@@ -42,6 +42,7 @@
         id="type"
         [(ngModel)]="typelist"
         class="form-control form-select"
+        formControlName="type"
       >
         <option *ngFor="let t of typeListValues" [ngValue]="t">
           {{ t }}
