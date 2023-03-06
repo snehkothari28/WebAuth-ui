@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HostListener } from '@angular/core';
 import validator from 'validator';
-import { typeList } from '../model/NewType';
+
+import jwt_decode from 'jwt-decode';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -18,13 +20,17 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
   searchText: any;
-  FilterType:any;
+  FilterType: any;
   isVisible = true;
   toggle = true;
   status = 'Auto-blur ON';
   autoBlur = true;
   isMobilePage = false;
-  typeListValues = Object.keys(typeList);
+  isMenuCollapsed: any;
+  // typeListValues = Object.keys(typeList);
+  token = sessionStorage.getItem('token') as string;
+   
+  obj: any = jwt_decode(this.token);
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
@@ -54,6 +60,11 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       this.getAllOtps();
     }
   }
+  // logout()
+  // {
+  //   localStorage.removeItem('token')
+  //   return this.router.navigate(['/login']);
+  // }
 
   companyName = environment.companyName;
   constructor(
@@ -61,7 +72,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private clipboard: Clipboard,
     private toastr: ToastrService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
@@ -76,8 +87,14 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
         console.log('Window out of focus');
       }
     }, 30000);
+   
+    console.log(this.obj['email']);
   }
 
+  logout() {
+    sessionStorage.removeItem('token');
+    return this.router.navigateByUrl('/login?autologin=false');
+  }
   getAllOtps() {
     console.log('Fetching TOTPs');
     this.totpService.getAllTotp().subscribe({

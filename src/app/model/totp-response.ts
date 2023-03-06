@@ -1,10 +1,11 @@
 import { DelegationModel } from "./delegation-model";
-import { typeList } from "./NewType";
+
 
 export interface TotpResponse {
   id: Number;
   name: string;
-  type: typeList;
+  // type: typeList;
+  type:string;
   secret: string;
   url: string;
   email: string;

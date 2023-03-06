@@ -1,8 +1,27 @@
-<nav class="navbar fixed-top header">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 nav">
   <div class="container-fluid">
-    <a routerLink="/home" class="home-link"> Go to Home</a>
+    <a class="navbar-brand" [routerLink]="'.'">Shrine Software</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isMenuCollapsed = !isMenuCollapsed"
+    >
+      &#9776;
+    </button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a routerLink="/home"
+            ><button class="btn btn-outline-primary home-link">
+              Go to Home
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
+
 <form [formGroup]="addSecret" (ngSubmit)="onSubmit()" novalidate>
   <div class="container">
     <button type="button" routerLink="/home" class="close_button">X</button>
@@ -13,7 +32,6 @@
         type="text"
         formControlName="name"
         placeholder="Project Name"
-        class="form-control"
       />
       <div
         *ngIf="
@@ -37,17 +55,42 @@
 
     <div class="form-group">
       <label for="type" style="color: #04acf4"> Type </label>
-      <select
-        name="type"
-        id="type"
-        [(ngModel)]="typelist"
-        class="form-control form-select"
+    </div>
+    <div class="autocomplete">
+      <ng-autocomplete
         formControlName="type"
+        [data]="types"
+        [searchKeyword]="keyword"
+        placeholder="Type"
+        [itemTemplate]="itemTemplate"
+        [notFoundTemplate]="notFoundTemplate"
       >
-        <option *ngFor="let t of typeListValues" [ngValue]="t">
-          {{ t }}
-        </option>
-      </select>
+      </ng-autocomplete>
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item"></a>
+      </ng-template>
+      <ng-template #notFoundTemplate let-notFound>
+        <a [innerHTML]="notFound"></a>
+      </ng-template>
+
+      <div
+        *ngIf="
+          addSecret.controls['type'].invalid &&
+          (addSecret.controls['type'].dirty ||
+            addSecret.controls['type'].touched)
+        "
+        class="alert"
+      >
+        <div *ngIf="addSecret.controls['type'].errors?.['required']">
+          Type is required.
+        </div>
+        <div *ngIf="addSecret.controls['type'].errors?.['minlength']">
+          Type should be atleast 2 character long.
+        </div>
+        <div *ngIf="addSecret.controls['type'].errors?.['maxlength']">
+          Type should not be more than 90 character.
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -59,7 +102,6 @@
           formControlName="secret"
           placeholder="Secret Key"
           oninput="this.value = this.value.split(' ').join('')"
-          class="form-control"
         />
         <div
           *ngIf="
@@ -89,7 +131,6 @@
         type="text"
         formControlName="url"
         placeholder="Login URL"
-        class="form-control"
       />
       <div
         *ngIf="
@@ -113,7 +154,6 @@
         type="text"
         formControlName="email"
         placeholder="Project Email ID/Username"
-        class="form-control"
       />
     </div>
 
@@ -124,7 +164,6 @@
         type="text"
         formControlName="password"
         placeholder="Password"
-        class="form-control"
       />
     </div>
 
@@ -225,7 +264,7 @@
       type="button"
       (click)="addFieldValue()"
       class="btn-1 btn"
-      style="background-color: #04acf4; color: white;margin-left: 146px;"
+      style="background-color: #04acf4; color: white; margin-left: 146px"
     >
       Add Users to delegate this access
     </button>
@@ -245,6 +284,6 @@
       </ng-template>
     </button>
     <br />
-    <br>  
+    <br />
   </div>
 </form>

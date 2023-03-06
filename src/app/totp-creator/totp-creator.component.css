@@ -1,21 +1,14 @@
-.header
-{
-  height: 90px;
-  display: block;
-  background-color: white;
-  background-image: url(src\assets\icons\company-logo.png);
-  background-repeat: no-repeat;
-  background-size: 150px 90px;
-  background-position: 20px 3px;
-  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+@import"https://fonts.googleapis.com/icon?family=Material+Icons";
+.nav {
+  margin-top: -23px;
+  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5); 
 }
 .home-link {
-  color: #04acf4;
   font-weight: bold;
   text-decoration: none;
-  font-size: 20px;
-  top: 30px;
-  right: 50px;
+  font-size:14px;
+  top: 13px;
+  right:32px;
   position: absolute;
 }
 .container
@@ -61,6 +54,16 @@ textarea {
   margin-bottom: 16px;
   resize: vertical;
   color: #04acf4;
+}
+.autocomplete{
+    margin-top: 6px;
+    border: 1px solid #04acf4;
+    width: 100%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    resize: vertical;
+    font-size: 10px;
 }
 .form-submit {
   width: 40%;
