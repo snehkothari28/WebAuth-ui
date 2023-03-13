@@ -12,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-totp-creator',
   templateUrl: './totp-creator.component.html',

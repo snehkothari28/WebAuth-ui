@@ -31,43 +31,42 @@ html {
 }
 .nav {
   margin-top: -23px;
-  /* background-image: url(src\assets\icons\company-logo.png); */
-  /* background-repeat: no-repeat;
-  background-size: 150px 90px;
-  background-position: 20px 3px;*/
-  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5); 
+  /* background-image: url(src\assets\icons\company-logo.png);
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  background-position: 20px 3px; */
+  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
 }
 .search {
-  margin-left:848px;
-  height: 34px;
+  margin-left: 681px;
+  height: 35px;
   border-radius: 3px;
   border: 1px solid blue !important;
   position: fixed;
-  margin-top: -5px;
+  margin-top: 1px;
 }
-.logout
-{
-  margin-left: 1158px;
+.logout {
+  margin-left: 1005px;
   position: fixed;
-  border:1px solid blue;
+  border: 1px solid blue;
   font-size: 11px;
-  margin-top: -5px;
+  margin-top: 1px;
 }
-.autoBlur
-{
+.autoBlur {
   position: fixed;
-  margin-left:790px;
+  margin-left: 615px;
+  margin-top: 0px;
 }
-.title_ab
-{
-  margin-left: 716px; 
-  display: inline-block
+.title_ab {
+  margin-left: 540px;
+  display: inline-block;
+  margin-top: 7px;
 }
-.email
-{
-  background-color:white;
+
+.email {
+  /* background-color: white;
   margin-left: 1210px;
-  border-radius: 15px;
+  border-radius: 15px; */
 }
 /* .nav {
   height: 90px;
@@ -90,9 +89,9 @@ a {
 .AddTOTP {
   font-size: 11px;
   text-decoration: none;
-  position: absolute;
-  top: 10px;
-  right: 119px;
+  position: fixed;
+  margin-top: 0px;
+  margin-left:887px;
   height: 36px;
   border: 1px solid blue;
 }
@@ -172,8 +171,7 @@ iframe {
   flex-wrap: wrap;
   padding: 33px 30px;
 }
-.typefield
-{
+.typefield {
   background-color: white;
   height: 24px;
   width: 98px;
@@ -182,7 +180,7 @@ iframe {
   width: auto;
   border: 1px solid black;
   position: relative;
-  top:17px;
+  top: 17px;
 }
 
 .table {
@@ -212,7 +210,7 @@ iframe {
   font-family: Poppins-Bold;
   font-size: 12px;
   color: gray;
-  line-height: 1.2;
+  line-height: 0.2;
   text-transform: uppercase;
   font-weight: unset !important;
   margin-bottom: 13px;
@@ -229,7 +227,7 @@ iframe {
   font-family: Poppins-Regular;
   font-size: 15px;
   color: #666;
-  line-height: 1.2;
+  line-height: 0.2;
   font-weight: unset !important;
   border: 1px solid #f2f2f2;
   text-align: center;
@@ -245,19 +243,35 @@ iframe {
 }
 
 .row .cell:nth-child(1) {
-  width: 360px;
+  padding-left: 37px;
 }
 
 .row .cell:nth-child(2) {
-  width: 160px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .row .cell:nth-child(3) {
-  width: 250px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .row .cell:nth-child(4) {
-  width: 190px;
+  padding-left: 156px;
+  padding-right: 187px;
+}
+.row .cell:nth-child(5) {
+  padding-left: 12px;
+  padding-right: 10px;
+}
+.row .cell:nth-child(6) {
+  padding: 0px;
+}
+.row .cell:nth-child(7) {
+  padding: 0px;
+}
+.row .cell:nth-child(8) {
+  padding: 0px;
 }
 
 .table,
@@ -281,9 +295,10 @@ iframe {
 
 .row .cell {
   border: 1px solid #e9e9e9;
-
+  padding-right: 45px;
   padding-top: 12px;
   padding-bottom: 12px;
+  text-align: center;
 }
 
 .row .cell:nth-child(1) {
@@ -292,9 +307,9 @@ iframe {
 
 .row .cell {
   font-family: Poppins-Regular;
-  font-size: 18px;
+  font-size: 15px;
   color: #555;
-  line-height: 1.2;
+  line-height: 0.2;
   font-weight: unset !important;
 }
 
@@ -330,12 +345,6 @@ button:disabled {
   cursor: auto;
 }
 
-.img-create-icon {
-  position: relative;
-  max-width: 20px;
-  max-height: 20px;
-}
-
 .noOtp {
   vertical-align: middle;
   position: absolute;
@@ -345,60 +354,100 @@ button:disabled {
   margin: 0;
 }
 
-@media only screen and (max-width: 1000px) {
-  .start-stop {
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 14px;
-    display: block;
-    margin-left: 143px;
-    margin-top:0%;
-    width: 118px;
-  }
+@media only screen and (max-width: 600px) {
+  /* .navbar-expand-custom
+  {
+    height:163px;
+  } */
   .AddTOTP {
     font-weight: bold;
     font-size: 11px;
     font-family: sans-serif;
     text-decoration: none;
-    position: absolute;
-    top: 51px;
-    right: 244px;
+    position: fixed;
+    margin-top: -3px;
+    margin-left: 9px;
     height: 27px;
     border: 1px solid blue;
   }
   .search {
-    margin-left: 9px;
-    height: 34px;
+    margin-left: 7px;
+    height: 27px;
     border-radius: 3px;
     border: 1px solid blue !important;
     position: fixed;
-    margin-top: 14px;
+    margin-top: 7px;
   }
-  .logout
-{
-  margin-left: 131px;
-  position: fixed;
-  border: 1px solid blue;
-  font-size: 11px;
-  margin-top: 3px;
-  height: 27px;
+
+  .logout {
+    margin-left: 124px;
+    position: fixed;
+    border: 1px solid blue;
+    font-size: 11px;
+    margin-top: -3px;
+    height: 27px;
+  }
+
+  .autoBlur {
+    position: fixed;
+    margin-left: 238px;
+    margin-top: 2px;
+    /* display: none; */
+  }
+  .email {
+    margin-left: -7px;
+    margin-top: -7px;
+  }
+  .title_ab {
+    margin-left: 281px;
+    margin-top: 7px;
+  }
 }
-.autoBlur
-{
-  position: fixed;
-  margin-left: 299px;
-  margin-top: 18px;
-}
+@media only screen and (min-width: 768px) and (max-width:1180px) {
+
+  .AddTOTP {
+    font-weight: bold;
+    font-size: 11px;
+    font-family: sans-serif;
+    text-decoration: none;
+    position: fixed;
+    margin-top: 4px;
+    margin-left: 297px;
+    height: 27px;
+    border: 1px solid blue;
+  }
+  .search {
+    margin-left: 170px;
+    height: 27px;
+    border-radius: 3px;
+    border: 1px solid blue !important;
+    position: fixed;
+    margin-top: 4px;
+    width: 119px;
+  }
+
+  .logout {
+    margin-left: 414px;
+    position: fixed;
+    border: 1px solid blue;
+    font-size: 11px;
+    margin-top: 4px;
+    height: 27px;
+  }
+
+  .autoBlur {
+    position: fixed;
+    margin-left: 117px;
+    margin-top: 0px;
+  }
+  .email {
+    margin-left: 6px;
+    margin-top: 5px;
+  }
+  .title_ab {
+    margin-left: 44px;
+    margin-top: 6px;
+  }
 
 }
-@media (min-width: 280px) and (max-width: 320px) {
-  .header {
-    background-image: url(src\assets\icons\company-logo.png);
-    background-repeat: no-repeat;
-    background-size: 150px 90px;
-    background-position: 2px 4px;
-    box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
-  }
-}
+

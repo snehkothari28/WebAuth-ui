@@ -1,15 +1,21 @@
-@import"https://fonts.googleapis.com/icon?family=Material+Icons";
-.nav {
-  margin-top: -23px;
-  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5); 
+
+.header
+{
+  height: 57px;
+  display: block;
+  background-color: white;
+  /* background-image: url(src\assets\icons\company-logo.png);
+  background-repeat: no-repeat;
+  background-size: 150px 90px;
+  background-position: 20px 3px; */
+  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
 }
-.home-link {
-  font-weight: bold;
-  text-decoration: none;
-  font-size:14px;
-  top: 13px;
+.home-link  {
+  
+  top: 9px;
   right:32px;
   position: absolute;
+ 
 }
 .container
 {
@@ -48,7 +54,6 @@ textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #04acf4;
-  border-radius: 10px;
   box-sizing: border-box;
   margin-top: 6px;
   margin-bottom: 16px;
@@ -59,7 +64,6 @@ textarea {
     margin-top: 6px;
     border: 1px solid #04acf4;
     width: 100%;
-    border-radius: 10px;
     box-sizing: border-box;
     margin-bottom: 16px;
     resize: vertical;
