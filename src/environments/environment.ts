@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  gsiClientId: '786010123487-8t4k7a6hqn2r7u17qkuap4pbf1t73kam.apps.googleusercontent.com',
+  gsiClientId: 'defgh',
   backEndUrl: 'http://localhost:8081/api/',
   companyDomain: 'test.com',
   companyName: 'Test',

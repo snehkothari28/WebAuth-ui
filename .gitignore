@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 src/environments/environment.prod.ts
 package-lock.json
+save_pid.txt 
+server-logs/
