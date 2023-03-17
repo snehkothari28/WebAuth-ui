@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     async function verify() {
       const ticket = await client.verifyIdToken({
       idToken: response,
-      audience: '786010123487-8t4k7a6hqn2r7u17qkuap4pbf1t73kam.apps.googleusercontent.com',
+      audience: 'defgh',
     });
       const payload = ticket.getPayload();
       const userid = payload!['sub'];
