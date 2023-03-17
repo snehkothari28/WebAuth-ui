@@ -132,7 +132,6 @@ iframe {
   flex-wrap: wrap;
   padding: 33px 30px;
 }
-
 .typefield {
   background-color: white;
   height: 24px;
@@ -224,7 +223,6 @@ iframe {
   padding-left: 156px;
   padding-right: 187px;
 }
-
 .row .cell:nth-child(5) {
   padding-left: 12px;
   padding-right: 10px;
