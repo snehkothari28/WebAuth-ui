@@ -12,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-totp-creator',
   templateUrl: './totp-creator.component.html',
@@ -69,11 +68,10 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // this.addSecret.controls.type.setValue(typeList.OTHERS);
     this.sub = this.route.params.subscribe((params) => {
       this.delegationTableFormArray.removeAt(0);
       if (params['id'] != null) {
-        const idFromParam = +params['id']; // (+) converts string 'id' to a number
+        const idFromParam = +params['id'];
         this.isUpdateRequest = true;
         this.updateId = idFromParam;
         this.totpService.getSecretKey(idFromParam).subscribe({
@@ -131,7 +129,6 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
 
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
-      // type: this.addSecret.get('type')?.value?? typeList.OTHERS,
       type: this.addSecret.get('type')?.value ?? '',
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined

@@ -1,71 +1,43 @@
-<link rel="preconnect" href="https://fonts.googleapis.com" /><link
-  rel="preconnect"
-  href="https://fonts.gstatic.com"
-  crossorigin
-/><link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
-  rel="stylesheet"
-/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 nav">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<nav class="navbar navbar fixed-top navbar-expand-lg navbar-light bg-light mb-3 nav">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="'.'">Shrine Software</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      (click)="isMenuCollapsed = !isMenuCollapsed"
-    >
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
       &#9776;
     </button>
 
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
       <ul class="navbar-nav">
-        
+
         <li class="nav-item">
-          <button
-            class="btn btn-outline-primary logout"
-            (click)="logout()"
-            (click)="isMenuCollapsed = true"
-          >
-            Log Out
-          </button>
+          <p class="email">{{ obj["email"] }}</p>
         </li>
+
         <li class="nav-item">
-          <a
-            routerLink="/createTOTP"
-            class="create-icon"
-            (click)="isMenuCollapsed = true"
-            style="margin-right: -30px"
-            ><button class="btn btn-outline-primary AddTOTP">
-              Add new TOTP
-            </button>
-          </a>
-        </li>
-        <li class="nav-item">
-         
-            <input
-            class="search"
-            name="search"
-            [(ngModel)]="searchText"
-            autocomplete="off"
-            (click)="isMenuCollapsed = true"
-            type="text"
-            placeholder="Search"
-          />
-        </li>
-        <li class="nav-item">
-          <ui-switch class="autoBlur" size="small" [checked]="true" (click)="enableDisableRule()"
-          (click)="isMenuCollapsed = true"></ui-switch>
+          <ui-switch class="autoBlur" size="small" [checked]="true" (click)="enableDisableRule()"></ui-switch>
           <label class="title_ab">Auto-Blur</label>
         </li>
 
+        <li class="nav-item">
+          <input class="search" name="search" [(ngModel)]="searchText" autocomplete="off" type="text"
+            placeholder="Search here" />
+        </li>
+        <li class="nav-item">
+          <button type="button" class="new" routerLink="/createTOTP">Add new TOTP</button>
+        </li>
+
+        <li class="nav-item">
+          <button type="button" class="log_out" (click)="logout()">Logout</button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
-
-<!-- <div class="header"></div> -->
-<p><button class="email">{{obj['email']}}</button></p>
 <div *ngIf="allOtps; else noOtp">
   <div class="wrap-table100">
     <div style="overflow-x: scroll; width: 100%">
@@ -75,13 +47,6 @@
             <div class="cell">Name</div>
             <div class="cell">
               Type
-              <!-- <select class="form-select" [(ngModel)]="FilterType"  autocomplete="on">
-                <option value="" selected>Select your Type</option>
-                <option *ngFor="let t of typeListValues" [ngValue]="t">
-                  {{ t }}
-                </option>
-              </select> -->
-              <input class="typefield" type="text"/>
             </div>
             <div class="cell">TOTP Secret</div>
             <div class="cell">URL</div>
@@ -90,13 +55,11 @@
             <div class="cell">Edit link</div>
             <div class="cell">Delete link</div>
           </div>
-          <ng-container
-            *ngFor="
+          <ng-container *ngFor="
               let totpResponse of allOtps
                 | filter : searchText
                 | filter : FilterType
-            "
-          >
+            ">
             <div class="row">
               <div class="cell">
                 {{ totpResponse.name }}
@@ -125,10 +88,7 @@
                   {{ totpResponse.password }}
                 </button>
               </div>
-              <div
-                *ngIf="totpResponse.owner || totpResponse.writeUser; else empty"
-                class="cell"
-              >
+              <div *ngIf="totpResponse.owner || totpResponse.writeUser; else empty" class="cell">
                 <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
               </div>
 

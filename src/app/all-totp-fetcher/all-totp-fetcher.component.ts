@@ -9,7 +9,6 @@ import { HostListener } from '@angular/core';
 import validator from 'validator';
 
 import jwt_decode from 'jwt-decode';
-import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-all-totp-fetcher',
@@ -25,11 +24,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   toggle = true;
   status = 'Auto-blur ON';
   autoBlur = true;
-  isMobilePage = false;
   isMenuCollapsed: any;
-  // typeListValues = Object.keys(typeList);
   token = sessionStorage.getItem('token') as string;
-   
   obj: any = jwt_decode(this.token);
   @HostListener('window:focus', ['$event'])
   onFocused() {
@@ -60,11 +56,6 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       this.getAllOtps();
     }
   }
-  // logout()
-  // {
-  //   localStorage.removeItem('token')
-  //   return this.router.navigate(['/login']);
-  // }
 
   companyName = environment.companyName;
   constructor(
@@ -72,7 +63,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private clipboard: Clipboard,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
@@ -87,7 +78,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
         console.log('Window out of focus');
       }
     }, 30000);
-   
+
     console.log(this.obj['email']);
   }
 
@@ -118,17 +109,17 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete ' + totpResponse.name)) {
       console.log(
         'deleting totpResponse with id ' +
-          totpResponse.id +
-          ' and name ' +
-          totpResponse.name
+        totpResponse.id +
+        ' and name ' +
+        totpResponse.name
       );
       this.totpService.deleteTOTP(totpResponse.id).subscribe({
         next: () => {
           console.log(
             'deleted successfully totpResponse with id ' +
-              totpResponse.id +
-              ' and name ' +
-              totpResponse.name
+            totpResponse.id +
+            ' and name ' +
+            totpResponse.name
           );
           this.toastr.info('Delete success');
           this.getAllOtps();

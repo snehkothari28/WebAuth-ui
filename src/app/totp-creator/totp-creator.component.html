@@ -1,24 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 nav">
+<meta name="viewport" content="width=device-width">
+
+<nav class="navbar fixed-top header">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="'.'">Shrine Software</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      (click)="isMenuCollapsed = !isMenuCollapsed"
-    >
-      &#9776;
-    </button>
-    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a routerLink="/home"
-            ><button class="btn btn-outline-primary home-link">
-              Go to Home
-            </button>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <button type="button" routerLink="/home" class="home-link">Go to Home</button>
+
   </div>
 </nav>
 
@@ -27,20 +13,12 @@
     <button type="button" routerLink="/home" class="close_button">X</button>
     <div class="form-group">
       <label for="name" style="color: #04acf4"> Project Name </label>
-      <input
-        id="name"
-        type="text"
-        formControlName="name"
-        placeholder="Project Name"
-      />
-      <div
-        *ngIf="
+      <input id="name" type="text" formControlName="name" placeholder="Project Name" />
+      <div *ngIf="
           addSecret.controls['name'].invalid &&
           (addSecret.controls['name'].dirty ||
             addSecret.controls['name'].touched)
-        "
-        class="alert"
-      >
+        " class="alert">
         <div *ngIf="addSecret.controls['name'].errors?.['required']">
           Name is required.
         </div>
@@ -55,32 +33,22 @@
 
     <div class="form-group">
       <label for="type" style="color: #04acf4"> Type </label>
-    </div>
-    <div class="autocomplete">
-      <ng-autocomplete
-        formControlName="type"
-        [data]="types"
-        [searchKeyword]="keyword"
-        placeholder="Type"
-        [itemTemplate]="itemTemplate"
-        [notFoundTemplate]="notFoundTemplate"
-      >
-      </ng-autocomplete>
-      <ng-template #itemTemplate let-item>
-        <a [innerHTML]="item"></a>
-      </ng-template>
-      <ng-template #notFoundTemplate let-notFound>
-        <a [innerHTML]="notFound"></a>
-      </ng-template>
-
-      <div
-        *ngIf="
-          addSecret.controls['type'].invalid &&
-          (addSecret.controls['type'].dirty ||
-            addSecret.controls['type'].touched)
-        "
-        class="alert"
-      >
+      <div class="autocomplete">
+        <ng-autocomplete formControlName="type" [data]="types" [searchKeyword]="keyword" placeholder="Type"
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item"></a>
+        </ng-template>
+        <ng-template #notFoundTemplate let-notFound>
+          <a [innerHTML]="notFound"></a>
+        </ng-template>
+      </div>
+      <div *ngIf="
+            addSecret.controls['type'].invalid &&
+            (addSecret.controls['type'].dirty ||
+              addSecret.controls['type'].touched)
+          " class="alert">
         <div *ngIf="addSecret.controls['type'].errors?.['required']">
           Type is required.
         </div>
@@ -91,26 +59,19 @@
           Type should not be more than 90 character.
         </div>
       </div>
+
     </div>
 
     <div class="form-group">
       <div *ngIf="!isUpdateRequest">
         <label for="secret" style="color: #04acf4"> Secret Key </label>
-        <input
-          id="secret"
-          type="text"
-          formControlName="secret"
-          placeholder="Secret Key"
-          oninput="this.value = this.value.split(' ').join('')"
-        />
-        <div
-          *ngIf="
+        <input id="secret" type="text" formControlName="secret" placeholder="Secret Key"
+          oninput="this.value = this.value.split(' ').join('')" />
+        <div *ngIf="
             addSecret.controls['secret'].invalid &&
             (addSecret.controls['secret'].dirty ||
               addSecret.controls['secret'].touched)
-          "
-          class="alert"
-        >
+          " class="alert">
           <div *ngIf="addSecret.controls['secret'].errors?.['required']">
             Secret is required.
           </div>
@@ -126,19 +87,11 @@
 
     <div class="form-group">
       <label for="url" style="color: #04acf4"> Login URL </label>
-      <input
-        id="url"
-        type="text"
-        formControlName="url"
-        placeholder="Login URL"
-      />
-      <div
-        *ngIf="
+      <input id="url" type="text" formControlName="url" placeholder="Login URL" />
+      <div *ngIf="
           addSecret.controls['url'].invalid &&
           (addSecret.controls['url'].dirty || addSecret.controls['url'].touched)
-        "
-        class="alert"
-      >
+        " class="alert">
         <div *ngIf="addSecret.controls['url'].errors?.['maxlength']">
           Url should not be more than 90 characters.
         </div>
@@ -149,22 +102,12 @@
       <label for="email" style="color: #04acf4">
         Project Email ID/Username
       </label>
-      <input
-        id="email"
-        type="text"
-        formControlName="email"
-        placeholder="Project Email ID/Username"
-      />
+      <input id="email" type="text" formControlName="email" placeholder="Project Email ID/Username" />
     </div>
 
     <div class="form-group">
       <label for="password" style="color: #04acf4"> Password </label>
-      <input
-        id="pass"
-        type="text"
-        formControlName="password"
-        placeholder="Password"
-      />
+      <input id="pass" type="text" formControlName="password" placeholder="Password" />
     </div>
 
     <br />
@@ -181,74 +124,41 @@
             </tr>
 
             <ng-container formArrayName="delegationTable">
-              <ng-container
-                *ngFor="
+              <ng-container *ngFor="
                   let delegationRow of delegationTableFormArray.controls;
                   let i = index
-                "
-                [formGroupName]="i"
-              >
+                " [formGroupName]="i">
                 <tr>
                   <td>
-                    <input
-                      type="email"
-                      class="cell"
-                      id="id4"
-                      data-title="Email"
-                      placeholder="Shrine email address"
-                      value="email"
-                      formControlName="email"
-                      oninput="this.value = this.value.split(' ').join('')"
-                    />
+                    <input type="email" class="cell" id="id4" data-title="Email" placeholder="Shrine email address"
+                      value="email" formControlName="email" oninput="this.value = this.value.split(' ').join('')" />
                   </td>
                   <td>
-                    <input
-                      type="checkbox"
-                      class="cell"
-                      data-title="Write Access?"
-                      placeholder=""
-                      id="id5"
-                      value="isWriteUser"
-                      formControlName="isWriteUser"
-                    />
+                    <input type="checkbox" class="cell" data-title="Write Access?" placeholder="" id="id5"
+                      value="isWriteUser" formControlName="isWriteUser" />
                   </td>
                   <td>
-                    <button
-                      [disabled]="!isOwner"
-                      (click)="deleteFieldValue(i)"
-                      id="removeUser"
-                    >
+                    <button [disabled]="!isOwner" (click)="deleteFieldValue(i)" id="removeUser">
                       Remove user
                     </button>
                   </td>
                 </tr>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     delegationTableFormArray.controls[i].invalid &&
                     (delegationTableFormArray.controls[i].dirty ||
                       delegationTableFormArray.controls[i].touched)
-                  "
-                  class="alert"
-                >
+                  " class="alertForDelegation">
                   <p>Error:</p>
-                  <div
-                    *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['required']"
-                  >
+                  <div *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['required']">
                     Email is required.
                   </div>
-                  <div
-                    *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['minlength']"
-                  >
+                  <div *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['minlength']">
                     Check email id.
                   </div>
-                  <div
-                    *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['pattern']"
-                  >
+                  <div *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['pattern']">
                     Please use {{ companyDomain }} email id only
                   </div>
-                  <div
-                    *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['maxlength']"
-                  >
+                  <div *ngIf="delegationTableFormArray.controls[i].get('email')?.errors?.['maxlength']">
                     Mail id should be shorter
                   </div>
                 </div>
@@ -260,22 +170,14 @@
       </div>
     </div>
 
-    <button
-      type="button"
-      (click)="addFieldValue()"
-      class="btn-1 btn"
-      style="background-color: #04acf4; color: white; margin-left: 146px"
-    >
+    <button type="button" (click)="addFieldValue()" class="btn-1 btn"
+      style="background-color: #04acf4; color: white; margin-left: 146px">
       Add Users to delegate this access
     </button>
     <br />
     <br />
     <br />
-    <button
-      [disabled]="addSecret.pristine || addSecret.invalid"
-      class="btn form-submit"
-      type="submit"
-    >
+    <button [disabled]="addSecret.pristine || addSecret.invalid" class="btn form-submit" type="submit">
       <ng-container *ngIf="isUpdateRequest; else addTotpText" class="center">
         <h4>Update TOTP</h4>
       </ng-container>

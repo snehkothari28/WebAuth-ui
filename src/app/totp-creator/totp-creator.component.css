@@ -1,26 +1,31 @@
-@import"https://fonts.googleapis.com/icon?family=Material+Icons";
-.nav {
-  margin-top: -23px;
-  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5); 
-}
-.home-link {
-  font-weight: bold;
-  text-decoration: none;
-  font-size:14px;
-  top: 13px;
-  right:32px;
-  position: absolute;
-}
-.container
-{
+.header {
+  height: 57px;
+  display: block;
   background-color: white;
-  margin-top:93px;
+  box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
+}
+
+.home-link {
+
+  top: 16px;
+  right: 32px;
+  position: absolute;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  color: #04acf4;
+
+}
+
+.container {
+  background-color: white;
+  margin-top: 93px;
   height: auto;
   width: 600px;
   border-radius: 10px;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.208);
-  
 }
+
 .close_button {
   display: flex;
   flex-wrap: wrap;
@@ -33,38 +38,47 @@
   font-size: 16px;
   cursor: pointer;
 }
+
 .alert {
-  color: red; 
+  color: red;
 }
+
+.alertForDelegation {
+  color: red;
+  margin-left: -27px;
+}
+
 .close_button:hover {
   background-color: rgba(255, 30, 0, 0.759);
 }
+
 #delegation_table {
   margin-left: 30px;
 }
+
 input[type="text"],
 select,
 textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #04acf4;
-  border-radius: 10px;
   box-sizing: border-box;
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
   color: #04acf4;
 }
-.autocomplete{
-    margin-top: 6px;
-    border: 1px solid #04acf4;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-bottom: 16px;
-    resize: vertical;
-    font-size: 10px;
+
+.autocomplete {
+  margin-top: 6px;
+  border: 1px solid #04acf4;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  resize: vertical;
+  font-size: 10px;
 }
+
 .form-submit {
   width: 40%;
   align-items: center;
@@ -74,12 +88,15 @@ textarea {
   border-radius: 4px;
   margin-left: 164px;
 }
+
 .form-submit:hover {
   background-color: #45a049;
 }
+
 .form-submit:disabled {
   background-color: #ccc;
 }
+
 .center {
   display: flex;
   justify-content: center;
@@ -87,6 +104,7 @@ textarea {
   height: 20px;
   border: 3px solid green;
 }
+
 #delegationTable {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -119,30 +137,36 @@ textarea {
   background-color: #04aa6d;
   color: white;
 }
+
 .btn1 {
   margin-left: 135px;
 }
+
 #id1 {
   padding: 0px 133px 21px 29px;
 }
+
 #id2 {
   display: flex;
   margin: 0px 0px 0px -23px;
 }
+
 #id3 {
   display: inline-block;
   margin-left: 229px;
   margin-top: -43px;
 }
+
 #id4 {
   width: 110px;
 }
+
 #id5 {
   text-align: center;
   margin: 3px 0px 5px 44px;
 }
-#removeUser
-{
+
+#removeUser {
   display: inline-block;
   margin-left: -83px;
-} 
+}
