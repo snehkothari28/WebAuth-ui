@@ -26,12 +26,12 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   isOwner: boolean = false;
   companyDomain = environment.companyDomain;
   isMenuCollapsed: any;
-  keyword='types';
+  keyword = 'types';
   types: string[] = [];
 
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
-    type: ['', [Validators.minLength(2)]],
+    type: ['', [Validators.required, Validators.minLength(2)]],
     secret: [
       '',
       [Validators.required, Validators.minLength(4), Validators.maxLength(200)],
@@ -65,7 +65,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
@@ -106,7 +106,11 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
       }
     });
     this.totpService.getAllTypes().subscribe((types) => {
-      this.types = types;
+      this.types = [];
+      types.map(type => {
+        if (type !== '') 
+        this.types.push(type.trim());
+      })
     });
   }
 
@@ -129,7 +133,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
 
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
-      type: this.addSecret.get('type')?.value ?? '',
+      type: this.addSecret.get('type')?.value ?? 'Others',
       secretKey: this.addSecret.get('secret')?.disabled
         ? undefined
         : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),

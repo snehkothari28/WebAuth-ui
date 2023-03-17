@@ -35,13 +35,10 @@
       <label for="type" style="color: #04acf4"> Type </label>
       <div class="autocomplete">
         <ng-autocomplete formControlName="type" [data]="types" [searchKeyword]="keyword" placeholder="Type"
-          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+          [itemTemplate]="itemTemplate">
         </ng-autocomplete>
         <ng-template #itemTemplate let-item>
           <a [innerHTML]="item"></a>
-        </ng-template>
-        <ng-template #notFoundTemplate let-notFound>
-          <a [innerHTML]="notFound"></a>
         </ng-template>
       </div>
       <div *ngIf="
