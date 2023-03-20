@@ -22,12 +22,15 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+
 
 @NgModule({
   imports: [
     AutocompleteLibModule,
     UiSwitchModule,
     MatAutocompleteModule,
+    MdbCollapseModule,
     NgbCollapseModule,
     Ng2SearchPipeModule,
     BrowserModule,
