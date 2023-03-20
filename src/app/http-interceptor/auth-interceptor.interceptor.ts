@@ -17,12 +17,12 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (!sessionStorage.getItem('token')) {
+    if (!localStorage.getItem('token')) {
       console.log('token empty');
       this.router.navigateByUrl('/login');
       return EMPTY;
     }
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     if (!token) {
       return next.handle(request);
