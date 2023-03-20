@@ -77,7 +77,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       } else {
         console.log('Window out of focus');
       }
-    }, 30000);
+    }, 15000);
 
     console.log(this.obj['email']);
   }
