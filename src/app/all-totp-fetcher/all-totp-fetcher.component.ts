@@ -25,7 +25,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   status = 'Auto-blur ON';
   autoBlur = true;
   isMenuCollapsed: any;
-  token = localStorage.getItem('token') as string;
+  token = sessionStorage.getItem('token') as string;
   obj: any = jwt_decode(this.token);
   @HostListener('window:focus', ['$event'])
   onFocused() {
@@ -83,7 +83,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     return this.router.navigateByUrl('/login?autologin=false');
   }
   getAllOtps() {
