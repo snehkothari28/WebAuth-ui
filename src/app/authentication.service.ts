@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   authenticate(jwt: string): Observable<any> {
     // console.log(this.backendUrl + 'authenticate');
-    sessionStorage.setItem('token', jwt);
+    localStorage.setItem('token', jwt);
     return this.http.get<string>(this.backendUrl + 'authenticate');
   }
   isLoggedIn(): Observable<any> {
