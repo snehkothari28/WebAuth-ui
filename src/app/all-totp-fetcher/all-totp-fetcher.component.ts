@@ -30,6 +30,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
+    this.getAllOtps();
     setTimeout(() => {
       if (this.isVisible) this.toastr.clear();
     }, 1500);
