@@ -22,7 +22,6 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   FilterType: any;
   isVisible = true;
   toggle = true;
-  status = 'Auto-blur ON';
   autoBlur = true;
   isMenuCollapsed: any;
   token = sessionStorage.getItem('token') as string;
@@ -46,12 +45,10 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       );
     }
   }
-  enableDisableRule() {
-    this.toggle = !this.toggle;
+  enableDisableRule(toggle: boolean) {
+    this.toggle = toggle;
     localStorage.setItem("toggle",String(this.toggle));
-    this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
-
-    if (this.status == 'Auto-blur ON') {
+    if (this.toggle ) {
       this.autoBlur = true;
     } else {
       this.autoBlur = false;

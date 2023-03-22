@@ -25,8 +25,9 @@
           <button type="button" class="log_out" (click)="logout()">Logout</button>
         </li>
         <li class="nav-item">
-          <ui-switch class="autoBlur" [(ngModel)]="toggle" (click)="enableDisableRule()"  checkedLabel="Auto-Blur ON"
-            uncheckedLabel="Auto-Blur OFF" size="small"></ui-switch>
+          <ui-switch class="autoBlur" [ngModel]="toggle"
+          (ngModelChange)="enableDisableRule($event)" checkedLabel="Auto-Blur ON"
+            uncheckedLabel="Auto-Blur OFF" size="small" ></ui-switch>
         </li>
 
       </ul>
