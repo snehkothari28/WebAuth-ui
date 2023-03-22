@@ -47,6 +47,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   }
   enableDisableRule() {
     this.toggle = !this.toggle;
+    localStorage.setItem("toggle",String(this.toggle));
     this.status = this.toggle ? 'Auto-blur ON' : 'Auto-blur OFF';
 
     if (this.status == 'Auto-blur ON') {
@@ -78,8 +79,9 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
         console.log('Window out of focus');
       }
     }, 30000);
-
-    console.log(this.obj['email']);
+    if(localStorage.getItem("toggle")!== null){
+      this.toggle = localStorage.getItem("toggle") == "true";
+    }
   }
 
   logout() {
