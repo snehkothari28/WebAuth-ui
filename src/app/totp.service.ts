@@ -43,4 +43,10 @@ export class TotpService {
     // console.log(this.backendUrl + 'getAll');
     return this.http.delete<any>(this.backendUrl + 'delete/' + id);
   }
+
+  getAllTypes(): Observable<string[]> {
+    return this.http.get<string[]>(this.backendUrl + 'types');
+  }
+   
 }
+

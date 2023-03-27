@@ -1,3 +1,4 @@
+@import 'ngx-toastr/toastr';
 router-outlet + * {
   padding: 0 16px;
 }
@@ -70,7 +71,6 @@ router-outlet + * {
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0 1px 0 #ffffff;
-  /* opacity: 0.8; */
 }
 .toast-close-button:hover,
 .toast-close-button:focus {
@@ -195,11 +195,15 @@ button.toast-close-button {
 }
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html {
   height: 100%;
 }
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color:#ccf5ff !important;
+  height: 100%;
+  width: 100%;
+
 }

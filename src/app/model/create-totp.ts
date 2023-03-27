@@ -1,8 +1,10 @@
 import { DelegationModel } from './delegation-model';
 
+
 export interface CreateTOTP {
   id: Number | undefined;
   name: string;
+  type:string;
   secretKey: string | undefined;
   url: string;
   email: string;

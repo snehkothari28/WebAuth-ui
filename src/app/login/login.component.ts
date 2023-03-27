@@ -1,12 +1,12 @@
 declare var google: any;
 
 import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { accounts } from 'google-one-tap';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
-import { TotpService } from '../totp.service';
+import {OAuth2Client} from 'google-auth-library';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +18,16 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private ngZone: NgZone,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    if (this.router.url != '/login') {
+    const routeUrl = this.router.url.split("?")[0];
+    if (routeUrl != '/login') {
       console.log('navigating to login' + ' from ' + this.router.url);
       this.router.navigateByUrl('/login');
     }
+    
     const gAccounts: accounts = google.accounts;
 
     gAccounts.id.initialize({
@@ -38,8 +41,15 @@ export class LoginComponent implements OnInit {
       context: 'use',
       ux_mode: 'popup',
       itp_support: true,
+    
     });
+    this.route.queryParams.subscribe((params) => {
+      if(params['autologin'] != undefined){
+        gAccounts.id.disableAutoSelect();
+      }
+    })
     gAccounts.id.prompt();
+
     gAccounts.id.renderButton(document.getElementById('googleLogin')!, {
       theme: 'outline',
       size: 'large',
@@ -49,10 +59,21 @@ export class LoginComponent implements OnInit {
       logo_alignment: 'center',
       width: 1000,
     });
+
   }
   handleCredentialResponse(response: string) {
-    console.log('loging in');
-    this.authenticationService.authenticate(response).subscribe({
+    const client = new OAuth2Client(`${environment.gsiClientId}`);
+
+    async function verify() {
+      const ticket = await client.verifyIdToken({
+      idToken: response,
+      audience: 'defgh',
+    });
+      const payload = ticket.getPayload();
+      const userid = payload!['sub'];
+  }
+      console.log('loging in');
+      this.authenticationService.authenticate(response).subscribe({
       next: () => {
         console.log('routing to home');
         this.router.navigateByUrl('/home');
@@ -62,6 +83,7 @@ export class LoginComponent implements OnInit {
       },
     });
   }
+ 
   private errorFunction(error: any) {
     this.toastr.error('Error Occured, please login again');
 
@@ -69,5 +91,7 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
   companyName = environment.companyName;
+
+ 
 
 }

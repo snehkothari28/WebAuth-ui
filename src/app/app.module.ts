@@ -15,12 +15,27 @@ import { TotpCreatorComponent } from './totp-creator/totp-creator.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './http-interceptor/auth-interceptor.interceptor';
 import { AuthGuard } from './auth/auth.guard';
-import { TopBarComponent } from './top-bar/top-bar.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { UiSwitchModule } from 'ngx-ui-switch';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+
 
 @NgModule({
   imports: [
+    AutocompleteLibModule,
+    UiSwitchModule,
+    MatAutocompleteModule,
+    MdbCollapseModule,
+    NgbCollapseModule,
+    Ng2SearchPipeModule,
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, 
+    FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       {
@@ -48,18 +63,22 @@ import { TopBarComponent } from './top-bar/top-bar.component';
       },
     ]),
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot(
+      {
+        preventDuplicates: true
+      }
+    ), // ToastrModule added
     MatCardModule,
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
+    NgbModule,
   ],
   declarations: [
     AppComponent,
     AllTotpFetcherComponent,
     TotpCreatorComponent,
     LoginComponent,
-    TopBarComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
