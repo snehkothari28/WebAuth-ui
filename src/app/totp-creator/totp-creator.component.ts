@@ -108,8 +108,8 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     this.totpService.getAllTypes().subscribe((types) => {
       this.types = [];
       types.map(type => {
-        if (type !== '') 
-        this.types.push(type.trim());
+        if (type !== '')
+          this.types.push(type.trim());
       })
     });
   }

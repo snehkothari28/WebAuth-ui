@@ -19,7 +19,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
   searchText: any;
-  FilterType: any;
+  FilterType: any = "";
+  typelist: string[] = [];
   isVisible = true;
   toggle = true;
   autoBlur = true;
@@ -76,8 +77,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       } else {
         console.log('Window out of focus');
       }
-    }, 30000);
-    if(localStorage.getItem("toggle")!== null){
+    }, 15000);
+    if (localStorage.getItem("toggle") !== null) {
       this.toggle = localStorage.getItem("toggle") == "true";
     }
   }
@@ -92,6 +93,12 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.allOtps = data;
         console.log('Fetch succesful');
+        this.typelist.splice(0);
+        this.allOtps.map((e) => {  
+          if (e.type !=null && e.type.trim().length !== 0 && !this.typelist.includes(e.type)) {   
+            this.typelist.push(e.type);
+          }
+        })
       },
       error: (err) => {
         this.errorFunction(err);
