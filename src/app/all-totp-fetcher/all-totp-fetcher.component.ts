@@ -32,7 +32,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     this.getAllOtps();
     setTimeout(() => {
       if (this.isVisible) this.toastr.clear();
-    }, 1500);
+    }, 15000);
   }
   @HostListener('window:blur', ['$event'])
   onBlur() {
@@ -76,7 +76,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       } else {
         console.log('Window out of focus');
       }
-    }, 30000);
+    }, 15000);
     if(localStorage.getItem("toggle")!== null){
       this.toggle = localStorage.getItem("toggle") == "true";
     }
