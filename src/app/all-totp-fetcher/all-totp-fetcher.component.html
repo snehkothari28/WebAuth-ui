@@ -1,39 +1,70 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <nav class="navbar navbar fixed-top navbar-expand-lg navbar-light bg-light nav">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Shrine Software</a>
-    <button class="navbar-toggler" type="button" (click)="togglerSecondExample.toggle()"
-      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="togglerSecondExample.toggle()"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" mdbCollapse #togglerSecondExample="mdbCollapse">
-      <ul class="navbar-nav me-auto ">
-        <li class="nav-item ">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarTogglerDemo02"
+      mdbCollapse
+      #togglerSecondExample="mdbCollapse"
+    >
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
           <p class="email">{{ obj["email"] }}</p>
         </li>
         <li class="nav-item">
-          <button type="button" class="new" routerLink="/createTOTP">Add new TOTP</button>
+          <button type="button" class="new" routerLink="/createTOTP">
+            Add new TOTP
+          </button>
         </li>
         <li class="nav-item">
-          <button type="button" class="log_out" (click)="logout()">Logout</button>
+          <button type="button" class="log_out" (click)="logout()">
+            Logout
+          </button>
         </li>
         <li class="nav-item">
-          <ui-switch class="autoBlur" [ngModel]="toggle"
-          (ngModelChange)="enableDisableRule($event)" checkedLabel="Auto-Blur ON"
-            uncheckedLabel="Auto-Blur OFF" size="small" ></ui-switch>
+          <ui-switch
+            class="autoBlur"
+            [ngModel]="toggle"
+            (ngModelChange)="enableDisableRule($event)"
+            checkedLabel="Auto-Blur ON"
+            uncheckedLabel="Auto-Blur OFF"
+            size="small"
+          ></ui-switch>
         </li>
-
       </ul>
       <form class="d-flex input-group w-auto">
-        <input name="search" [(ngModel)]="searchText" type="search" class="form-control search"
-          placeholder="Search here" aria-label="Search" autofocus />
+        <input
+          name="search"
+          [(ngModel)]="searchText"
+          type="search"
+          class="form-control search"
+          placeholder="Search here"
+          aria-label="Search"
+          autofocus
+        />
       </form>
     </div>
   </div>
@@ -45,15 +76,15 @@
         <div class="table" [ngClass]="{ overlay: !isVisible }">
           <div class="row header">
             <div class="cell">Name</div>
-            <div class="cell"> 
+            <div class="cell">
               <select required class="dropdown" [(ngModel)]="FilterType">
-                <option value="" disabled selected >Type</option>
-                <option value="" >--Select--</option>
+                <option value="" disabled selected>Type</option>
+                <option value="">--Select--</option>
                 <option *ngFor="let t of typelist">
-                  {{t}}
+                  {{ t }}
                 </option>
-            </select>
-            </div>  
+              </select>
+            </div>
             <div class="cell">TOTP Secret</div>
             <div class="cell">URL</div>
             <div class="cell">Email/Username</div>
@@ -64,9 +95,8 @@
           <ng-container *ngFor="
               let totpResponse of allOtps
                 | filter : searchText
-                | filter : FilterType
             ">
-            <div class="row">
+            <div *ngIf="filter(totpResponse, FilterType)" class="row">
               <div class="cell">
                 {{ totpResponse.name }}
               </div>
@@ -94,7 +124,10 @@
                   {{ totpResponse.password }}
                 </button>
               </div>
-              <div *ngIf="totpResponse.owner || totpResponse.writeUser; else empty" class="cell">
+              <div
+                *ngIf="totpResponse.owner || totpResponse.writeUser; else empty"
+                class="cell"
+              >
                 <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
               </div>
 
