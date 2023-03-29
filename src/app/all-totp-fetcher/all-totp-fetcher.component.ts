@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HostListener } from '@angular/core';
 import validator from 'validator';
-
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -19,21 +18,20 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   allOtps!: TotpResponse[];
   interval: any;
   searchText: any;
-  FilterType: any = "";
-  typelist: string[] = [];
+  FilterType: any="";
   isVisible = true;
   toggle = true;
   autoBlur = true;
-  isMenuCollapsed: any;
   token = sessionStorage.getItem('token') as string;
   obj: any = jwt_decode(this.token);
+  typelist:string[]=[];
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
     this.getAllOtps();
     setTimeout(() => {
       if (this.isVisible) this.toastr.clear();
-    }, 1500);
+    }, 15000);
   }
   @HostListener('window:blur', ['$event'])
   onBlur() {

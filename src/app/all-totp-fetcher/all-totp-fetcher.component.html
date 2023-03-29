@@ -33,7 +33,7 @@
       </ul>
       <form class="d-flex input-group w-auto">
         <input name="search" [(ngModel)]="searchText" type="search" class="form-control search"
-          placeholder="Search here" aria-label="Search" autofocus/>
+          placeholder="Search here" aria-label="Search" autofocus />
       </form>
     </div>
   </div>
@@ -47,7 +47,7 @@
             <div class="cell">Name</div>
             <div class="cell"> 
               <select required class="dropdown" [(ngModel)]="FilterType">
-                <option value="" disabled selected hidden>Type</option>
+                <option value="" disabled selected >Type</option>
                 <option value="" >--Select--</option>
                 <option *ngFor="let t of typelist">
                   {{t}}

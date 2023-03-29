@@ -25,10 +25,9 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   isWriteUser: boolean = false;
   isOwner: boolean = false;
   companyDomain = environment.companyDomain;
-  isMenuCollapsed: any;
   keyword = 'types';
   types: string[] = [];
-
+  
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
     type: ['', [Validators.required, Validators.minLength(2)]],
@@ -108,8 +107,8 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     this.totpService.getAllTypes().subscribe((types) => {
       this.types = [];
       types.map(type => {
-        if (type !== '')
-          this.types.push(type.trim());
+        if (type !== '') 
+        this.types.push(type.trim());
       })
     });
   }

@@ -66,16 +66,16 @@ export class LoginComponent implements OnInit {
 
     async function verify() {
       const ticket = await client.verifyIdToken({
-        idToken: response,
-        audience: environment.gsiClientId
-      });
+      idToken: response,
+      audience: environment.gsiClientId
+    });
       const payload = ticket.getPayload();
       const userid = payload!['sub'];
-    }
-    verify().catch(console.error);
-
-    console.log('loging in');
-    this.authenticationService.authenticate(response).subscribe({
+  }
+  verify().catch(console.error);
+  
+      console.log('loging in');
+      this.authenticationService.authenticate(response).subscribe({
       next: () => {
         console.log('routing to home');
         this.router.navigateByUrl('/home');
