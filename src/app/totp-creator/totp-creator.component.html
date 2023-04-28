@@ -14,7 +14,7 @@
     <div class="form-group">
       <label for="name" style="color: #04acf4"> Project Name </label>
       <input id="name" type="text" formControlName="name" placeholder="Project Name"
-        [ngClass]="{'invalid': submitted && addSecret.controls['name'].invalid}"
+        [ngClass]="{'invalid': addSecret.controls['name'].invalid}"
         onchange="this.value = this.value.trim()" />
       <div *ngIf="
           addSecret.controls['name'].invalid &&
@@ -35,7 +35,7 @@
 
     <div class="form-group">
       <label for="type" style="color: #04acf4"> Type </label>
-      <div class="autocomplete" [ngClass]="{'invalid': submitted && addSecret.controls['type'].invalid}">
+      <div class="autocomplete" [ngClass]="{'invalid':addSecret.controls['type'].invalid}">
         <ng-autocomplete formControlName="type" [data]="types" [searchKeyword]="keyword" placeholder="Type"
           [itemTemplate]="itemTemplate" onchange="this.value = this.value.trim()">
         </ng-autocomplete>
@@ -43,12 +43,8 @@
           <a [innerHTML]="item"></a>
         </ng-template>
       </div>
-      <div *ngIf="
-            addSecret.controls['type'].invalid &&
-            (addSecret.controls['type'].dirty ||
-              addSecret.controls['type'].touched)
-          " class="alert">
-        <div *ngIf="addSecret.controls['type'].errors?.['required']">
+      <div class="alert">
+        <div *ngIf="addSecret.controls['type'].invalid &&addSecret.controls['type'].errors?.['required']">
           Type is required.
         </div>
         <div *ngIf="addSecret.controls['type'].errors?.['minlength']">
@@ -58,6 +54,7 @@
           Type should not be more than 90 character.
         </div>
       </div>
+      
 
     </div>
 
@@ -87,7 +84,7 @@
     <div class="form-group">
       <label for="url" style="color: #04acf4"> Login URL </label>
       <input id="url" type="text" formControlName="url" placeholder="Login URL"
-        [ngClass]="{'invalid':submitted && addSecret.controls['url'].invalid }"
+        [ngClass]="{'invalid':addSecret.controls['url'].invalid }"
         onchange="this.value = this.value.trim()" />
       <div *ngIf="
           addSecret.controls['url'].invalid &&
@@ -105,7 +102,10 @@
       </label>
       <input id="email" type="text" formControlName="email" placeholder="Project Email ID/Username"
         onchange="this.value = this.value.trim()"
-        [ngClass]="{'invalid': submitted && addSecret.controls['email'].invalid}" />
+        [ngClass]="{'invalid':addSecret.controls['email'].invalid}" />
+        <div *ngIf="addSecret.controls['email'].invalid" class="alert">
+          Invalid email
+        </div>
     </div>
 
     <div class="form-group">
@@ -182,7 +182,7 @@
     <br />
     <br />
     <br />
-    <button class="btn form-submit" type="submit">
+    <button  [disabled]="addSecret.invalid" class="btn form-submit" type="submit">
       <ng-container *ngIf="isUpdateRequest; else addTotpText" class="center">
         <h4>Update TOTP</h4>
       </ng-container>
