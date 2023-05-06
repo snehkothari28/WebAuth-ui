@@ -47,6 +47,16 @@ export class TotpService {
   getAllTypes(): Observable<string[]> {
     return this.http.get<string[]>(this.backendUrl + 'types');
   }
+
+  getDeletedRecords(): Observable<any>
+  {
+    return this.http.get<TotpResponse>(this.backendUrl + 'deletedRecords');
+  }
+  restoreTOTP(id: Number): Observable<any>
+  {
+    return this.http.get<any>(this.backendUrl +'restoredRecords/'+id)
+  }
+
    
 }
 

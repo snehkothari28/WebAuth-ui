@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HostListener } from '@angular/core';
 import validator from 'validator';
-
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -16,16 +15,21 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./all-totp-fetcher.component.css'],
 })
 export class AllTotpFetcherComponent implements OnInit, OnDestroy {
+  filter(item: TotpResponse, filter: string): any {
+    if (filter == null || filter.length == 0) return true;
+    if (item.type == null || item.type.length == 0) return false;
+    return item.type.toUpperCase() === filter.toUpperCase();
+  }
   allOtps!: TotpResponse[];
   interval: any;
   searchText: any;
-  FilterType: any;
+  FilterType: any = '';
   isVisible = true;
   toggle = true;
   autoBlur = true;
-  isMenuCollapsed: any;
   token = sessionStorage.getItem('token') as string;
   obj: any = jwt_decode(this.token);
+  typelist: string[] = [];
   @HostListener('window:focus', ['$event'])
   onFocused() {
     this.isVisible = true;
@@ -47,8 +51,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
   }
   enableDisableRule(toggle: boolean) {
     this.toggle = toggle;
-    localStorage.setItem("toggle",String(this.toggle));
-    if (this.toggle ) {
+    localStorage.setItem('toggle', String(this.toggle));
+    if (this.toggle) {
       this.autoBlur = true;
     } else {
       this.autoBlur = false;
@@ -62,7 +66,7 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     private clipboard: Clipboard,
     private toastr: ToastrService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
@@ -77,8 +81,8 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
         console.log('Window out of focus');
       }
     }, 15000);
-    if(localStorage.getItem("toggle")!== null){
-      this.toggle = localStorage.getItem("toggle") == "true";
+    if (localStorage.getItem('toggle') !== null) {
+      this.toggle = localStorage.getItem('toggle') == 'true';
     }
   }
 
@@ -92,6 +96,16 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.allOtps = data;
         console.log('Fetch succesful');
+        this.typelist.splice(0);
+        this.allOtps.map((e) => {
+          if (
+            e.type != null &&
+            e.type.trim().length !== 0 &&
+            !this.typelist.includes(e.type)
+          ) {
+            this.typelist.push(e.type);
+          }
+        });
       },
       error: (err) => {
         this.errorFunction(err);
@@ -109,17 +123,17 @@ export class AllTotpFetcherComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete ' + totpResponse.name)) {
       console.log(
         'deleting totpResponse with id ' +
-        totpResponse.id +
-        ' and name ' +
-        totpResponse.name
+          totpResponse.id +
+          ' and name ' +
+          totpResponse.name
       );
       this.totpService.deleteTOTP(totpResponse.id).subscribe({
         next: () => {
           console.log(
             'deleted successfully totpResponse with id ' +
-            totpResponse.id +
-            ' and name ' +
-            totpResponse.name
+              totpResponse.id +
+              ' and name ' +
+              totpResponse.name
           );
           this.toastr.info('Delete success');
           this.getAllOtps();

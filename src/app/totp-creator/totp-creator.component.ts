@@ -11,7 +11,6 @@ import { TotpService } from '../totp.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-totp-creator',
   templateUrl: './totp-creator.component.html',
@@ -25,9 +24,9 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   isWriteUser: boolean = false;
   isOwner: boolean = false;
   companyDomain = environment.companyDomain;
-  isMenuCollapsed: any;
   keyword = 'types';
   types: string[] = [];
+  submitted = false;
 
   addSecret = this.formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4)]],
@@ -37,7 +36,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
       [Validators.required, Validators.minLength(4), Validators.maxLength(200)],
     ],
     url: ['', Validators.maxLength(90)],
-    email: [''],
+    email: ['', Validators.email],
     password: [''],
     delegationTable: this.formBuilder.array([
       this.createDelegationTableGroup('@' + this.companyDomain, false),
@@ -108,7 +107,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     this.totpService.getAllTypes().subscribe((types) => {
       this.types = [];
       types.map(type => {
-        if (type !== '') 
+        if (type !== '')
         this.types.push(type.trim());
       })
     });
@@ -125,6 +124,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.submitted=true;
     if (!this.addSecret.valid) {
       console.log('invalid form');
       this.toastr.error('Invalid form, please check');

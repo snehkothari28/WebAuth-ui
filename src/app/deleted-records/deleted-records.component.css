@@ -4,14 +4,6 @@ html {
   font-family: sans-serif;
 }
 
-.overlay {
-  position: fixed;
-  width: 100%;
-  background-color: #000;
-  opacity: 0.1;
-  z-index: 1000;
-}
-
 .nav {
   box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.5);
 }
@@ -26,8 +18,8 @@ html {
   border: 1px solid #04acf4 !important;
   position: sticky;
 }
-.dropdown
-{
+
+.dropdown {
   width: 106px;
   background-color: white;
   height: 36px;
@@ -35,22 +27,7 @@ html {
   border-radius: 4px;
 }
 
-.autoBlur {
-  top: 15px;
-  position: sticky;
-  margin-left: 11px;
-}
-
-.title {
-  margin-left: 86px;
-  position: sticky;
-}
-
 .new {
-  color: #04acf4;
-}
-
-.log_out {
   color: #04acf4;
 }
 
@@ -185,7 +162,7 @@ iframe {
   font-weight: unset !important;
   margin-bottom: 13px;
   content: attr(data-title);
-  min-width: 118px;
+  min-width: 256px;
   display: block;
 }
 
