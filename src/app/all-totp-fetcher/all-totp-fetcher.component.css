@@ -26,6 +26,14 @@ html {
   border: 1px solid #04acf4 !important;
   position: sticky;
 }
+.dropdown
+{
+  width: 106px;
+  background-color: white;
+  height: 36px;
+  font-size: 15px;
+  border-radius: 4px;
+}
 
 .autoBlur {
   top: 15px;
