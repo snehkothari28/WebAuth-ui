@@ -6,7 +6,7 @@ import { accounts } from 'google-one-tap';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
-import {OAuth2Client} from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +20,14 @@ export class LoginComponent implements OnInit {
     private ngZone: NgZone,
     private toastr: ToastrService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit(): void {
     const routeUrl = this.router.url.split("?")[0];
     if (routeUrl != '/login') {
       console.log('navigating to login' + ' from ' + this.router.url);
       this.router.navigateByUrl('/login');
     }
-    
+
     const gAccounts: accounts = google.accounts;
 
     gAccounts.id.initialize({
@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
       context: 'use',
       ux_mode: 'popup',
       itp_support: true,
-    
+
     });
     this.route.queryParams.subscribe((params) => {
-      if(params['autologin'] != undefined){
+      if (params['autologin'] != undefined) {
         gAccounts.id.disableAutoSelect();
       }
     })
@@ -67,11 +67,13 @@ export class LoginComponent implements OnInit {
     async function verify() {
       const ticket = await client.verifyIdToken({
       idToken: response,
-      audience: 'defgh',
+      audience: environment.gsiClientId
     });
       const payload = ticket.getPayload();
       const userid = payload!['sub'];
   }
+  verify().catch(console.error);
+  
       console.log('loging in');
       this.authenticationService.authenticate(response).subscribe({
       next: () => {
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
       },
     });
   }
- 
+
   private errorFunction(error: any) {
     this.toastr.error('Error Occured, please login again');
 
@@ -92,6 +94,6 @@ export class LoginComponent implements OnInit {
   }
   companyName = environment.companyName;
 
- 
+
 
 }
