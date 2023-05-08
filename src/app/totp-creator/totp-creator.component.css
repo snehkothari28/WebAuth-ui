@@ -80,24 +80,26 @@ textarea {
   font-size: 10px;
 }
 
-.form-submit {
+.enabled {
   width: 40%;
   align-items: center;
+  height: 50px;
   background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
   margin-left: 164px;
 }
-
-.form-submit:hover {
-  background-color: #45a049;
+.disabled {
+  width: 40%;
+  height: 50px;
+  align-items: center;
+  background-color: #bdc6bd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-left: 164px;
 }
-
-.form-submit:disabled {
-  background-color: #ccc;
-}
-
 .center {
   display: flex;
   justify-content: center;
