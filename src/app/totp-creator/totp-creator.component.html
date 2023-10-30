@@ -13,7 +13,8 @@
     <button type="button" routerLink="/home" class="close_button">X</button>
     <div class="form-group">
       <label for="name" style="color: #04acf4"> Project Name </label>
-      <input id="name" type="text" formControlName="name" placeholder="Project Name" />
+      <input id="name" type="text" formControlName="name" placeholder="Project Name" 
+       onchange="this.value = this.value.trim()" />
       <div *ngIf="
           addSecret.controls['name'].invalid &&
           (addSecret.controls['name'].dirty ||
@@ -35,7 +36,7 @@
       <label for="type" style="color: #04acf4"> Type </label>
       <div class="autocomplete">
         <ng-autocomplete formControlName="type" [data]="types" [searchKeyword]="keyword" placeholder="Type"
-          [itemTemplate]="itemTemplate">
+          [itemTemplate]="itemTemplate" onchange="this.value = this.value.trim()">
         </ng-autocomplete>
         <ng-template #itemTemplate let-item>
           <a [innerHTML]="item"></a>
@@ -84,7 +85,8 @@
 
     <div class="form-group">
       <label for="url" style="color: #04acf4"> Login URL </label>
-      <input id="url" type="text" formControlName="url" placeholder="Login URL" />
+      <input id="url" type="text" formControlName="url" placeholder="Login URL"
+      onchange="this.value = this.value.trim()" />
       <div *ngIf="
           addSecret.controls['url'].invalid &&
           (addSecret.controls['url'].dirty || addSecret.controls['url'].touched)
@@ -99,12 +101,14 @@
       <label for="email" style="color: #04acf4">
         Project Email ID/Username
       </label>
-      <input id="email" type="text" formControlName="email" placeholder="Project Email ID/Username" />
+      <input id="email" type="text" formControlName="email" placeholder="Project Email ID/Username"
+       onchange="this.value = this.value.trim()" />
     </div>
 
     <div class="form-group">
       <label for="password" style="color: #04acf4"> Password </label>
-      <input id="pass" type="text" formControlName="password" placeholder="Password" />
+      <input id="pass" type="text" formControlName="password" placeholder="Password" 
+      onchange="this.value = this.value.trim()"/>
     </div>
 
     <br />
