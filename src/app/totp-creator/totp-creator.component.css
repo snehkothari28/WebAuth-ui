@@ -67,6 +67,7 @@ textarea {
   margin-bottom: 16px;
   resize: vertical;
   color: #04acf4;
+  outline: none;
 }
 
 .autocomplete {
@@ -169,4 +170,7 @@ textarea {
 #removeUser {
   display: inline-block;
   margin-left: -83px;
+}
+.invalid {
+  border: 2px solid red !important;
 }

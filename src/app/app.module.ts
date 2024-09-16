@@ -23,6 +23,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { DeletedRecordsComponent } from './deleted-records/deleted-records.component';
 
 
 @NgModule({
@@ -58,6 +59,10 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
         component: LoginComponent,
       },
       {
+        path: 'deletedRecords',
+        component: DeletedRecordsComponent,
+      },
+      {
         path: '**',
         component: LoginComponent,
       },
@@ -79,6 +84,7 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
     AllTotpFetcherComponent,
     TotpCreatorComponent,
     LoginComponent,
+    DeletedRecordsComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
