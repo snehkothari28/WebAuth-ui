@@ -3,7 +3,7 @@
 if test -f nohup.out; then
   rm nohup.out
 fi
-npm update
+# npm update
 npm install
 
 timestamp=$(date "+%Y%m%d%H%M%S")
