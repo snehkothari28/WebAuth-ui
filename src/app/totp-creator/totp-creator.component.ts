@@ -83,6 +83,7 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
             this.addSecret.controls.url.setValue(data.url);
             this.addSecret.controls.email.setValue(data.email);
             this.addSecret.controls.password.setValue(data.password);
+            this.addSecret.controls.secret.setValue(data.secret);
             this.addSecret.controls.secret.disable();
             if (data.delegationTable !== undefined) {
               data.delegationTable.forEach((element) => {
@@ -133,14 +134,12 @@ export class TotpCreatorComponent implements OnInit, OnDestroy {
     const createTOTP: CreateTOTP = {
       name: this.addSecret.get('name')?.value ?? 'invalid name value',
       type: this.addSecret.get('type')?.value ?? 'Others',
-      secretKey: this.addSecret.get('secret')?.disabled
-        ? undefined
-        : this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
+      secretKey: this.addSecret.get('secret')?.value?.replace(/\s/g, ''),
       id: this.updateId,
       url: this.addSecret.get('url')?.value ?? '',
       email: this.addSecret.get('email')?.value ?? '',
       password: this.addSecret.get('password')?.value ?? '',
-      delegationTableModel: this.delegationTableFormArray.value,
+      delegationTableModel: this.delegationTableFormArray.getRawValue(),
     };
     console.log(createTOTP);
     if (!this.isUpdateRequest) {
