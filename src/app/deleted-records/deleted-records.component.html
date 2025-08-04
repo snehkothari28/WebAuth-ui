@@ -18,23 +18,9 @@
           <p class="email">{{ obj["email"] }}</p>
         </li>
         <li class="nav-item">
-          <button type="button" class="new" routerLink="/createTOTP">
-            Add new TOTP
+          <button type="button" class="new" [routerLink]="'/home'">
+            Go to Home
           </button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="new" routerLink="/deletedRecords">
-            Deleted Records
-          </button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="new" (click)="logout()">
-            Logout
-          </button>
-        </li>
-        <li class="nav-item">
-          <ui-switch class="autoBlur" [ngModel]="toggle" (ngModelChange)="enableDisableRule($event)"
-            checkedLabel="Auto-Blur ON" uncheckedLabel="Auto-Blur OFF" size="small"></ui-switch>
         </li>
       </ul>
       <form class="d-flex input-group w-auto">
@@ -44,11 +30,11 @@
     </div>
   </div>
 </nav>
-<div *ngIf="allOtps; else noOtp">
+<div *ngIf="deletedRecords">
   <div class="wrap-table100">
     <div style="overflow-x: scroll; width: 100%">
       <table style="width: 100%">
-        <div class="table" [ngClass]="{ overlay: !isVisible }">
+        <div class="table">
           <div class="row header">
             <div class="cell">Name</div>
             <div class="cell">
@@ -60,15 +46,12 @@
                 </option>
               </select>
             </div>
-            <div class="cell">TOTP Secret</div>
-            <div class="cell">URL</div>
-            <div class="cell">Email/Username</div>
-            <div class="cell">Password</div>
-            <div class="cell">Edit link</div>
-            <div class="cell">Delete link</div>
+            <div class="cell">Deleted By</div>
+            <div class="cell">Deleted At</div>
+            <div class="cell">Restore</div>
           </div>
           <ng-container *ngFor="
-              let totpResponse of allOtps
+              let totpResponse of deletedRecords
                 | filter : searchText
             ">
             <div *ngIf="filter(totpResponse, FilterType)" class="row">
@@ -79,32 +62,19 @@
                 {{ totpResponse.type }}
               </div>
               <div class="cell">
-                <button (click)="copyTotp(totpResponse.secret)">
-                  {{ totpResponse.secret }}
+                <button (click)="copyTotp(totpResponse.deletedBy)">
+                  {{ totpResponse.deletedBy }}
                 </button>
               </div>
               <div class="cell">
-                <button (click)="goToLink(totpResponse.url)">
-                  {{ totpResponse.url }}
+                <button (click)="copyTotp(totpResponse.deletedAt)">
+                  {{ totpResponse.deletedAt }}
                 </button>
               </div>
               <div class="cell">
-                <button (click)="copyTotp(totpResponse.email)">
-                  {{ totpResponse.email }}
+                <button (click)="restoreSecret(totpResponse.id)">
+                  Restore
                 </button>
-              </div>
-
-              <div class="cell">
-                <button (click)="copyTotp(totpResponse.password)">
-                  {{ totpResponse.password }}
-                </button>
-              </div>
-              <div *ngIf="totpResponse.owner || totpResponse.writeUser; else empty" class="cell">
-                <a [routerLink]="['/createTOTP', totpResponse.id]"> Edit </a>
-              </div>
-
-              <div *ngIf="totpResponse.owner; else empty" class="cell">
-                <button (click)="deleteSecret(totpResponse)">Delete</button>
               </div>
             </div>
             <ng-template #empty>
@@ -116,11 +86,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #noOtp>
-  <h2 class="noOtp">
-    You have not been delegated any project creds yet. <br />
-    Either ask the project owner to add one or create one yourself if you own
-    the project.
-  </h2>
-</ng-template>
