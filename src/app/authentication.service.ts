@@ -1,21 +1,24 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private backendUrl = environment.backEndUrl;
-  constructor(private http: HttpClient) {}
+  
+  constructor() {} 
 
   authenticate(jwt: string): Observable<any> {
-    // console.log(this.backendUrl + 'authenticate');
     sessionStorage.setItem('token', jwt);
-    return this.http.get<string>(this.backendUrl + 'authenticate');
+    return of({ success: true });
   }
-  isLoggedIn(): Observable<any> {
-    return this.http.get<string>(this.backendUrl + 'authenticate');
+
+  isLoggedIn(): Observable<boolean> {
+    const token = sessionStorage.getItem('token');
+    return of(!!token);
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('token');
   }
 }
