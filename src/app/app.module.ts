@@ -74,7 +74,6 @@ import { environment } from 'src/environments/environment';
       },
     ]),
 
-    // Microsoft Authentication - Simplified configuration
     MsalModule.forRoot(
       new PublicClientApplication({
         auth: {

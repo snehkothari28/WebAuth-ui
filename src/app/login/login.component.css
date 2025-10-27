@@ -21,5 +21,4 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px 24px;
 }
 
-/* Add Font Awesome for icons if not already included */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
