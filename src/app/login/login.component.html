@@ -1,4 +1,14 @@
-
-
-<h3> Login from your {{companyName}} account</h3>
-<div id="googleLogin"></div>
+<div id="microsoftLogin">
+  <h3>Login with your {{ companyName }} account</h3>
+  <button 
+    class="btn btn-outline-primary btn-lg" 
+    (click)="loginWithMicrosoft()"
+    [disabled]="isLoading">
+    <span *ngIf="!isLoading">
+      <i class="fab fa-microsoft"></i> Sign in with Microsoft
+    </span>
+    <span *ngIf="isLoading">
+      <i class="fas fa-spinner fa-spin"></i> Signing in...
+    </span>
+  </button>
+</div>

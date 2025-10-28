@@ -1,12 +1,10 @@
-declare var google: any;
-
-import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { accounts } from 'google-one-tap';
+import { Component, OnInit } from '@angular/core';
+import { MsalService } from '@azure/msal-angular';
+import { AuthenticationResult } from '@azure/msal-browser';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
-import { OAuth2Client } from 'google-auth-library';
 
 @Component({
   selector: 'app-login',
@@ -14,86 +12,64 @@ import { OAuth2Client } from 'google-auth-library';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  companyName = environment.companyName;
+  isLoading = false;
+
   constructor(
+    private msalService: MsalService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private ngZone: NgZone,
-    private toastr: ToastrService,
-    private route: ActivatedRoute
-  ) { }
-  ngOnInit(): void {
-    const routeUrl = this.router.url.split("?")[0];
-    if (routeUrl != '/login') {
-      console.log('navigating to login' + ' from ' + this.router.url);
-      this.router.navigateByUrl('/login');
-    }
+    private toastr: ToastrService
+  ) {}
 
-    const gAccounts: accounts = google.accounts;
+  ngOnInit(): void {}
 
-    gAccounts.id.initialize({
-      client_id: `${environment.gsiClientId}`,
-      callback: ({ credential }) => {
-        this.ngZone.run(() => {
-          this.handleCredentialResponse(credential);
+  private handleAuthResponse(response: AuthenticationResult): void {
+    try {
+      this.msalService.instance.setActiveAccount(response.account);
+
+      const idToken = response.idToken;
+
+      if (idToken) {
+        sessionStorage.setItem('token', idToken);
+        this.authenticationService.authenticate(idToken).subscribe({
+          next: (authResponse) => {
+            this.router.navigate(['/home']);
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.toastr.error('Backend authentication failed');
+            this.isLoading = false;
+            sessionStorage.removeItem('token');
+          },
         });
-      },
-      auto_select: true,
-      context: 'use',
-      ux_mode: 'popup',
-      itp_support: true,
-
-    });
-    this.route.queryParams.subscribe((params) => {
-      if (params['autologin'] != undefined) {
-        gAccounts.id.disableAutoSelect();
+      } else {
+        console.warn('No ID token in response');
+        this.toastr.error('No ID token received');
+        this.isLoading = false;
       }
-    })
-    gAccounts.id.prompt();
-
-    gAccounts.id.renderButton(document.getElementById('googleLogin')!, {
-      theme: 'outline',
-      size: 'large',
-      type: 'standard',
-      shape: 'rectangular',
-      text: 'continue_with',
-      logo_alignment: 'center',
-      width: 1000,
-    });
-
-  }
-  handleCredentialResponse(response: string) {
-    const client = new OAuth2Client(`${environment.gsiClientId}`);
-
-    async function verify() {
-      const ticket = await client.verifyIdToken({
-      idToken: response,
-      audience: environment.gsiClientId
-    });
-      const payload = ticket.getPayload();
-      const userid = payload!['sub'];
-  }
-  verify().catch(console.error);
-  
-      console.log('loging in');
-      this.authenticationService.authenticate(response).subscribe({
-      next: () => {
-        console.log('routing to home');
-        this.router.navigateByUrl('/home');
-      },
-      error: (err) => {
-        this.errorFunction(err);
-      },
-    });
+    } catch (error) {
+      console.error('Error handling auth response:', error);
+      this.toastr.error('Authentication failed. Please try again.');
+      this.isLoading = false;
+    }
   }
 
-  private errorFunction(error: any) {
-    this.toastr.error('Error Occured, please login again');
-
-    console.log('caught in error' + error);
-    this.router.navigateByUrl('/login');
+  loginWithMicrosoft(): void {
+    this.isLoading = true;
+    this.msalService
+      .loginPopup({
+        scopes: ['openid', 'profile', 'email'],
+      })
+      .subscribe({
+        next: (response: AuthenticationResult) => {
+          this.handleAuthResponse(response);
+        },
+        error: (error: any) => {
+          console.error('Login popup error:', error);
+          this.isLoading = false;
+          this.toastr.error('Login failed. Please try again.');
+        },
+      });
   }
-  companyName = environment.companyName;
-
-
-
 }

@@ -24,6 +24,8 @@
     "@angular/platform-browser": "^15.0.4",
     "@angular/platform-browser-dynamic": "^15.0.4",
     "@angular/router": "^15.0.4",
+    "@azure/msal-angular": "^4.0.20",
+    "@azure/msal-browser": "^4.25.1",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
     "@types/google-one-tap": "^1.2.2",
@@ -59,7 +61,7 @@
   "devDependencies": {
     "@angular-builders/custom-webpack": "^15.0.0",
     "@types/jasmine": "~4.3.1",
-    "@types/node": "^18.11.15",
+    "@types/node": "^18.19.130",
     "@types/uuid": "^9.0.0",
     "@types/validator": "^13.7.10",
     "jasmine-core": "~4.5.0",

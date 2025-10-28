@@ -1,20 +1,24 @@
-#googleLogin {
-  /* height: 200px;
-  width: 400px; */
-
+#microsoftLogin {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
- text-align: center; 
- margin-top: 50px; 
+h1, h2, h3, h4, h5, h6 {
+  text-align: center; 
+  margin-top: 0;
+  margin-bottom: 30px;
 }
+
+.btn {
+  min-width: 200px;
+  padding: 12px 24px;
+}
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
