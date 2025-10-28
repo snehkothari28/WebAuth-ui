@@ -22,18 +22,27 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private handleAuthResponse(response: AuthenticationResult): void {
     try {
       this.msalService.instance.setActiveAccount(response.account);
-      
+
       const idToken = response.idToken;
-      
+
       if (idToken) {
         sessionStorage.setItem('token', idToken);
-        this.router.navigate(['/home']);
+        this.authenticationService.authenticate(idToken).subscribe({
+          next: (authResponse) => {
+            this.router.navigate(['/home']);
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.toastr.error('Backend authentication failed');
+            this.isLoading = false;
+            sessionStorage.removeItem('token');
+          },
+        });
       } else {
         console.warn('No ID token in response');
         this.toastr.error('No ID token received');
@@ -48,17 +57,19 @@ export class LoginComponent implements OnInit {
 
   loginWithMicrosoft(): void {
     this.isLoading = true;
-    this.msalService.loginPopup({
-      scopes: ['openid', 'profile', 'email'],
-    }).subscribe({
-      next: (response: AuthenticationResult) => {
-        this.handleAuthResponse(response);
-      },
-      error: (error: any) => {
-        console.error('Login popup error:', error);
-        this.isLoading = false;
-        this.toastr.error('Login failed. Please try again.');
-      }
-    });
+    this.msalService
+      .loginPopup({
+        scopes: ['openid', 'profile', 'email'],
+      })
+      .subscribe({
+        next: (response: AuthenticationResult) => {
+          this.handleAuthResponse(response);
+        },
+        error: (error: any) => {
+          console.error('Login popup error:', error);
+          this.isLoading = false;
+          this.toastr.error('Login failed. Please try again.');
+        },
+      });
   }
 }
